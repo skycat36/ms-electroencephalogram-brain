@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 public class MatrixConverter {
 
-
     public static double[][] convert(List<List<Double>> arr){
         if (Objects.isNull(arr)){
             return null;

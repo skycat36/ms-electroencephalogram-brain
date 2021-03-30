@@ -27,7 +27,7 @@ public class Main {
             }
         }
 
-        writeUsingFiles("E:\\magister\\example\\calculete_layer\\src\\main\\resources", "FileWriter.txt", writeData.toString());
+        writeUsingFiles("E:\\magister\\ms-electroencephalogram-brain\\src\\main\\resources", "FileWriter.txt", writeData.toString());
     }
 
     private static String readUsingFiles(String fileName) throws IOException {
@@ -44,8 +44,6 @@ public class Main {
 
     public static void readToFile(String path, String fileName, String data){
         File file = new File(path + "\\" + fileName);
-        //File file = new Fil
-        // e("C:\\vegas\\homework\\layer\\FileWriter.txt");
         FileWriter fr = null;
         try {
             fr = new FileWriter(file);

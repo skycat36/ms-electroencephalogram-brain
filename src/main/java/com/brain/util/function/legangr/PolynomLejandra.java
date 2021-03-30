@@ -1,4 +1,4 @@
-package com.brain.function.legangr;
+package com.brain.util.function.legangr;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -187,15 +187,6 @@ public class PolynomLejandra {
         arrFunkPolinom.add((x)-> (583_401_555 * Math.pow(x, 16) - 2_404_321_560. * Math.pow(x, 14) + 4_071_834_900. * Math.pow(x, 12) - 3_650_610_600. * Math.pow(x, 10)  +
                 1_859_107_250 * Math.pow(x, 8) - 535_422_888 * Math.pow(x, 6) + 81_477_396 * Math.pow(x, 4) - 5_542_680 * Math.pow(x, 2) + 109_395) / 32_768);
 
-//        //n=18
-//        arrFunkPolinom.add((x)-> 1);
-//
-//        //n=19
-//        arrFunkPolinom.add((x)-> 1);
-//
-//        //n=20
-//        arrFunkPolinom.add((x)-> 1);
-
     }
 
     /**
@@ -203,8 +194,8 @@ public class PolynomLejandra {
      * @return значение полинома
      * @throws Exception параметры заданы не верно или расчитать в точке полином невозможно
      */
-    public static double calculatePolinomProizN(double x, int n, int m) throws Exception {
-        if (n > arrParamPolinom.size()) throw new Exception("Scale can't be bigger " + arrFunkPolinom.size());
+    public static double calculatePolinomProizN(double x, int n, int m) throws RuntimeException {
+        if (n > arrParamPolinom.size()) throw new RuntimeException("Scale can't be bigger " + arrFunkPolinom.size());
 
         double result = 1;
 
@@ -242,8 +233,8 @@ public class PolynomLejandra {
      * @return значение производной полинома
      * @throws Exception параметры заданы не верно или расчитать в точке производную полинома невозможно
      */
-    public double calculateDerivativePalindromeLeander(double x, int n, int m)  throws Exception {
-        if (n > arrParamPolinom.size()) throw new Exception("Scale can't be bigger " + arrFunkPolinom.size());
+    public double calculateDerivativePalindromeLeander(double x, int n, int m)  throws RuntimeException {
+        if (n > arrParamPolinom.size()) throw new RuntimeException("Scale can't be bigger " + arrFunkPolinom.size());
 
         double multiplierA = n / (1.0 - x * x);
         return multiplierA * (calculatePolinomProizN(x, n - 1, m) -  x * calculatePolinomProizN(x, n, m));
@@ -254,7 +245,7 @@ public class PolynomLejandra {
      * @return значение полинома
      * @throws Exception параметры заданы не верно или расчитать в точке полином невозможно
      */
-    public static double mergePolinomLegandra(double x, int n, int m) throws Exception {
+    public static double mergePolinomLegandra(double x, int n, int m) throws RuntimeException {
         return Math.pow(-1, m) * Math.pow(1 - Math.pow(x, 2), m / 2.0) * calculatePolinomProizN(x, n, m);
     }
 }

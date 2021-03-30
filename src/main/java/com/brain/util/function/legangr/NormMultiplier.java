@@ -1,12 +1,11 @@
-package com.brain.function.legangr;
+package com.brain.util.function.legangr;
 
 public class NormMultiplier {
-
 
     /**
      * Описывает распространение электрических потенциалов по сфере мозга
      */
-    public static double Y(int L, int m, double teta, double fi) throws Exception {
+    public static double Y(int L, int m, double teta, double fi) throws RuntimeException {
         double result = calculeteAttachedNormMultiplierLegandra(L, m);
 
         if (m >= 0){
