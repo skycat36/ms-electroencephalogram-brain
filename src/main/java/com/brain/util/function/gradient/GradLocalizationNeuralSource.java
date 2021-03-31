@@ -22,13 +22,12 @@ public class GradLocalizationNeuralSource {
         return CoefficientUtils.coefficientEL(expU, n, teta, fi, teta0, fi0, mX, mY, mZ, rD) * subFunction;
     }
 
-    //TODO  CoefficientUtils.coefficientSum здесь сумма начинается с 2
     public static double dFrd(double expU, int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double rD) {
-        double subFunction =
-                ( - mX * CoefficientUtils.coefficientSum(n,1. / rD, (L) -> (L - 1) * CoefficientUtils.coefficientAL(teta, fi, teta0, fi0, L)) -
-                mY * CoefficientUtils.coefficientSum(n, 1. / rD, (L) -> (L - 1) * CoefficientUtils.coefficientCL(teta, fi, teta0, fi0, L)) -
-                mZ * CoefficientUtils.coefficientSum(n, 1. / rD, (L) -> (L - 1) * CoefficientUtils.coefficientBL(teta, fi, teta0, fi0, L)));
+        double result =
+                ( - mX * CoefficientUtils.coefficientSum(2, n,1. / rD, (L) -> (L - 1) * CoefficientUtils.coefficientAL(teta, fi, teta0, fi0, L)) -
+                mY * CoefficientUtils.coefficientSum(2, n, 1. / rD, (L) -> (L - 1) * CoefficientUtils.coefficientCL(teta, fi, teta0, fi0, L)) -
+                mZ * CoefficientUtils.coefficientSum(2, n, 1. / rD, (L) -> (L - 1) * CoefficientUtils.coefficientBL(teta, fi, teta0, fi0, L)));
 
-        return CoefficientUtils.coefficientEL(expU, n, teta, fi, teta0, fi0, mX, mY, mZ, rD) * subFunction;
+        return CoefficientUtils.coefficientEL(expU, n, teta, fi, teta0, fi0, mX, mY, mZ, rD) * result;
     }
 }
