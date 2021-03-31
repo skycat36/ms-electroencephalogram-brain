@@ -27,7 +27,6 @@ public class GradDerivativeLocalizationNeuralSource {
                 CoefficientUtils.coefficientSum(n, rD, (L) -> subFunction.apply(L) * L * CoefficientUtils.coefficientBL(teta, fi, teta0, fi0, L));
     }
 
-    //TODO  CoefficientUtils.coefficientSum здесь сумма начинается с 2
     public static double dFrd(double expU, int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double R1, double rD) throws Exception {
         Function<Integer, Double> subFunction = (L) -> (1 - Math.pow(L, 2)) / Math.pow(R1, L + 2);
 
