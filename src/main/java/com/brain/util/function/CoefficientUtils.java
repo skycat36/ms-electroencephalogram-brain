@@ -81,11 +81,7 @@ public class CoefficientUtils {
     }
 
     public static double coefficientSum(int n, double rD, Function<Integer, Double> coefficientFunc) throws RuntimeException {
-        double result = .0;
-        for (int i = 1; i < n; i++){
-            result += Math.pow(rD, i - 1) * coefficientFunc.apply(i);
-        }
-        return result;
+        return coefficientSum(1, n, rD, coefficientFunc);
     }
 
     public static double coefficientSum(int i, int n, double rD, Function<Integer, Double> coefficientFunc) throws RuntimeException {
