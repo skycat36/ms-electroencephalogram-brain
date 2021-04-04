@@ -8,6 +8,7 @@ import org.apache.commons.math3.linear.RealMatrix;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class CoefficientUtils {
 
@@ -90,5 +91,18 @@ public class CoefficientUtils {
             result += Math.pow(rD, i - 1) * coefficientFunc.apply(i);
         }
         return result;
+    }
+
+    public static List<Double> listSum(List<? extends Number> list1, List<? extends Number> list2) throws RuntimeException {
+        if (list1.size() != list2.size()) throw new RuntimeException("Arrays must be equals size!");
+        List<Double> result = new ArrayList<>();
+        for (int i = 0; i < list1.size(); i++){
+            result.add(list1.get(i).doubleValue() + list2.get(i).doubleValue());
+        }
+        return result;
+    }
+
+    public static List<Double> listMul(List<? extends Number> list1, Number number) throws RuntimeException {
+        return list1.stream().map(num -> num.doubleValue() * number.doubleValue()).collect(Collectors.toList());
     }
 }

@@ -6,28 +6,28 @@ import java.util.function.Function;
 
 public class GradDerivativeLocalizationNeuralSource {
 
-    public static double dFMx(double expU, int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double R1, double rD) throws Exception {
+    public static double dFMx(int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double R1, double rD) throws Exception {
         Function<Integer, Double> subFunction = (L) -> (-L - 1) / Math.pow(R1, L + 2);
 
         return CoefficientUtils.coefficientTL(n, teta, fi, teta0, fi0, mX, mY, mZ, R1, rD) *
                 CoefficientUtils.coefficientSum(n, rD, (L) -> subFunction.apply(L) * CoefficientUtils.coefficientAL(teta, fi, teta0, fi0, L));
     }
 
-    public static double dFMy(double expU, int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double R1, double rD) throws Exception {
+    public static double dFMy(int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double R1, double rD) throws Exception {
         Function<Integer, Double> subFunction = (L) -> (-L - 1) / Math.pow(R1, L + 2);
 
         return CoefficientUtils.coefficientTL(n, teta, fi, teta0, fi0, mX, mY, mZ, R1, rD) *
                 CoefficientUtils.coefficientSum(n, rD, (L) -> subFunction.apply(L) * CoefficientUtils.coefficientCL(teta, fi, teta0, fi0, L));
     }
 
-    public static double dFMz(double expU, int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double R1, double rD) throws Exception {
+    public static double dFMz(int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double R1, double rD) throws Exception {
         Function<Integer, Double> subFunction = (L) -> (-L - 1) / Math.pow(R1, L + 2);
 
         return CoefficientUtils.coefficientTL(n, teta, fi, teta0, fi0, mX, mY, mZ, R1, rD) *
                 CoefficientUtils.coefficientSum(n, rD, (L) -> subFunction.apply(L) * L * CoefficientUtils.coefficientBL(teta, fi, teta0, fi0, L));
     }
 
-    public static double dFrd(double expU, int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double R1, double rD) throws Exception {
+    public static double dFrd(int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double R1, double rD) throws Exception {
         Function<Integer, Double> subFunction = (L) -> (1 - Math.pow(L, 2)) / Math.pow(R1, L + 2);
 
         double result =

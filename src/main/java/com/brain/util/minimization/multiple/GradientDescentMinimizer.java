@@ -1,4 +1,7 @@
-package com.brain.util.minimization;
+package com.brain.util.minimization.multiple;
+
+import com.brain.util.minimization.point.Point2D;
+import com.brain.util.minimization.single.GoldenRatioMinimizer;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -38,12 +41,12 @@ public class GradientDescentMinimizer {
                 nextPoint = Point2D.sub(startPoint, Point2D.mul(grad, stepSize));
 
                 Boolean stopCriteria1 = getNorm(Point2D.sub(nextPoint, startPoint)) < precision;
-                Boolean stopCriteria2 = !domX.test(nextPoint.getX());
-                Boolean stopCriteria3 = !domY.test(nextPoint.getY());
-                Boolean stopCriteria4 = Math.abs(f.apply(nextPoint.getX(), nextPoint.getY()) - f.apply(startPoint.getX(), startPoint.getY())) < precision;
+                Boolean stopCriteria2 = !domX.test(nextPoint.getTeta());
+                Boolean stopCriteria3 = !domY.test(nextPoint.getFi());
+                Boolean stopCriteria4 = Math.abs(f.apply(nextPoint.getTeta(), nextPoint.getFi()) - f.apply(startPoint.getTeta(), startPoint.getFi())) < precision;
                 functionComputationsCounter++;
 
-                writer.format("%s -> %.5f\n", startPoint.toString(), f.apply(startPoint.getX(), startPoint.getY()));
+                writer.format("%s -> %.5f\n", startPoint.toString(), f.apply(startPoint.getTeta(), startPoint.getFi()));
 
                 if (stopCriteria1 || stopCriteria2 || stopCriteria3 || stopCriteria4) {
                     writer.format("I calculated gradient for %d times, and function for %d times", gradientComputationsCounter, functionComputationsCounter);
@@ -51,7 +54,7 @@ public class GradientDescentMinimizer {
                     return nextPoint;
                 }
 
-                startPoint = new Point2D(nextPoint.getX(), nextPoint.getY());
+                startPoint = new Point2D(nextPoint.getTeta(), nextPoint.getFi());
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -85,26 +88,26 @@ public class GradientDescentMinimizer {
                 double stepSize = goldenRatioMinimizer.argmin(
                         (x) -> {
                             Point2D point = Point2D.sub(finalStartPoint, Point2D.mul(grad, x));
-                            return f.apply(point.getX(), point.getY());
+                            return f.apply(point.getTeta(), point.getFi());
                         },
                         0.0,
                         1.0,
                         1e-2);
 
                 nextPoint = Point2D.sub(startPoint, Point2D.mul(grad, stepSize));
-                writer.format("%s -> %.5f\n", startPoint.toString(), f.apply(startPoint.getX(), startPoint.getY()));
+                writer.format("%s -> %.5f\n", startPoint.toString(), f.apply(startPoint.getTeta(), startPoint.getFi()));
 
                 Boolean stopCriteria1 = getNorm(Point2D.sub(nextPoint, startPoint)) < precision;
-                Boolean stopCriteria2 = !domX.test(nextPoint.getX());
-                Boolean stopCriteria3 = !domY.test(nextPoint.getY());
-                Boolean stopCriteria4 = Math.abs(f.apply(nextPoint.getX(), nextPoint.getY()) - f.apply(startPoint.getX(), startPoint.getY())) < precision;
+                Boolean stopCriteria2 = !domX.test(nextPoint.getTeta());
+                Boolean stopCriteria3 = !domY.test(nextPoint.getFi());
+                Boolean stopCriteria4 = Math.abs(f.apply(nextPoint.getTeta(), nextPoint.getFi()) - f.apply(startPoint.getTeta(), startPoint.getFi())) < precision;
                 functionComputationsCounter++;
                 if (stopCriteria1 || stopCriteria2 || stopCriteria3 || stopCriteria4) {
                     writer.format("I calculated gradient for %d times, and function for %d times", gradientComputationsCounter, functionComputationsCounter);
                     writer.close();
                     return nextPoint;
                 }
-                startPoint = new Point2D(nextPoint.getX(), nextPoint.getY());
+                startPoint = new Point2D(nextPoint.getTeta(), nextPoint.getFi());
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -120,12 +123,12 @@ public class GradientDescentMinimizer {
      */
 
     private Point2D getGradient(BiFunction<Double, Double, Double> f, Point2D point) {
-        double x = (f.apply(point.getX() + EPS, point.getY()) - f.apply(point.getX(), point.getY())) / EPS;
-        double y = (f.apply(point.getX(), point.getY() + EPS) - f.apply(point.getX(), point.getY())) / EPS;
+        double x = (f.apply(point.getTeta() + EPS, point.getFi()) - f.apply(point.getTeta(), point.getFi())) / EPS;
+        double y = (f.apply(point.getTeta(), point.getFi() + EPS) - f.apply(point.getTeta(), point.getFi())) / EPS;
         return new Point2D(x, y);
     }
 
     private double getNorm(Point2D point) {
-        return Math.sqrt( ( point.getX() * point.getX() ) + ( point.getY() * point.getY() ) );
+        return Math.sqrt( ( point.getTeta() * point.getTeta() ) + ( point.getFi() * point.getFi() ) );
     }
 }

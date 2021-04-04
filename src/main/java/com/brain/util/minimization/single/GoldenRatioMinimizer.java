@@ -1,4 +1,4 @@
-package com.brain.util.minimization;
+package com.brain.util.minimization.single;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
