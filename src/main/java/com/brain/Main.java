@@ -1,6 +1,8 @@
 package com.brain;
 
 import com.brain.service.layer.SolvingDirectTask;
+import com.brain.service.layer.SolvingInverseProblem;
+import com.brain.util.minimization.point.ResultPoint;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -19,11 +21,14 @@ public class Main {
         double temp = Math.PI / 3;
 
         for (double i = 0; i < Math.PI; i+=temp){
-            for (double j = 0; j < 2*Math.PI; j+=temp){
-                writeData.append(String.format("Teta[i]: %s, Fi[j]: %s |  rez: %s \n",
-                        i,
-                        j,
-                        SolvingDirectTask.calculate(n, i, j, 0.1,0.1,0.1, R1, 2)));
+            for (double j = 0; j < 2 * Math.PI; j+=temp){
+
+                double directResult = SolvingDirectTask.calculate(n, i, j, 0.9,0.4,0.5, R1, 2);
+                writeData.append(String.format("DirectTask  -- Teta[i]: %s, Fi[j]: %s |  rez: %s \n", i, j, directResult));
+
+                ResultPoint inverseResult = SolvingInverseProblem.calculate(directResult, n, i, j, 0.1, 0.1, R1, 0.01, 0.5);
+                writeData.append(String.format("InverseTask -- Teta[i]: %s, Fi[j]: %s |  rez --  mX: %s  | mY: %s | mZ: %s | rD: %s | potential: %s | iterations: %s\n\n",
+                        i, j, inverseResult.getTeta(), inverseResult.getFi(), inverseResult.getRou(), inverseResult.getWi(), inverseResult.getPotential(), inverseResult.getIterations()));
             }
         }
 

@@ -14,6 +14,38 @@ import java.util.function.Function;
 public class BitStepTest {
 
     @Test
+    public void minimizationTestPoint1D(){
+
+        // F(x,y) = (x-1)^2
+        Function<PointMinimization, Double> funk = (point2D) -> Math.pow(((Point2D)point2D).getTeta() - 1, 2);
+        // dF/dX = 2 * (x-1)
+        Function<PointMinimization, Double> gradX = (point2D) -> 2 * (((Point2D)point2D).getTeta() - 1);
+        // dF/dY = 2 * (y-2)
+        Function<PointMinimization, Double> gradY = (point2D) -> 0.;
+        // norma = sqrt((dF/dX)^2 + (dF/dY)^2)
+        Function<PointMinimization, Double> norma = (point2D) -> Math.sqrt(Math.pow(gradX.apply(point2D), 2) + Math.pow(gradY.apply(point2D), 2));
+        BitStep bitStepMinimization = new BitStep(funk, norma, Arrays.asList(gradX, gradY));
+
+        // inaccuracy
+        double eps = 0.5;
+        // Firs step
+        double alfa = 0.1;
+
+        // Start point
+        Point2D point2D = new Point2D(4. , 5. );
+
+        ResultPoint resultPoint = bitStepMinimization.minimization(point2D, eps, alfa);
+
+        boolean result = false;
+
+        // Resolve equation : x = 1, y = 2
+        if ((1 - eps) < resultPoint.getTeta() &&  resultPoint.getTeta() < (1 + eps) ){
+                result = true;
+        }
+        Assert.assertTrue(result);
+    }
+
+    @Test
     public void minimizationTestPoint2D(){
 
         // F(x,y) = (x-1)^2 + (y-2)^2
@@ -94,6 +126,7 @@ public class BitStepTest {
         Assert.assertTrue(result);
     }
 
+    //TODO Скорее всего неправельно посчитан гардиент
     @Ignore
     @Test
     public void minimizationTestPoint4DExample2(){

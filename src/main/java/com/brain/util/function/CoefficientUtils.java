@@ -72,7 +72,7 @@ public class CoefficientUtils {
         return 2 * (expU - result);
     }
 
-    public static double coefficientTL(int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double R1, double rD) throws Exception {
+    public static double coefficientTL(int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double R1, double rD) {
 
         Function<Integer, Double> subFunction = (L) -> (-L - 1) / Math.pow(R1, L + 2);
 
