@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Random;
 
 public class Main {
 
@@ -23,10 +24,10 @@ public class Main {
         for (double i = 0; i < Math.PI; i+=temp){
             for (double j = 0; j < 2 * Math.PI; j+=temp){
 
-                double directResult = SolvingDirectTask.calculate(n, i, j, 0.9,0.4,0.5, R1, 2);
+                double directResult = SolvingDirectTask.calculate(n, i, j, 0.9, 0.4, 0.1, R1, 4);
                 writeData.append(String.format("DirectTask  -- Teta[i]: %s, Fi[j]: %s |  rez: %s \n", i, j, directResult));
 
-                ResultPoint inverseResult = SolvingInverseProblem.calculate(directResult, n, i, j, 0.1, 0.1, R1, 0.01, 0.5);
+                ResultPoint inverseResult = SolvingInverseProblem.calculate(directResult + new Random().nextDouble()%1., n, i, j, 1., 1., R1, 0.1, 0.5);
                 writeData.append(String.format("InverseTask -- Teta[i]: %s, Fi[j]: %s |  rez --  mX: %s  | mY: %s | mZ: %s | rD: %s | potential: %s | iterations: %s\n\n",
                         i, j, inverseResult.getTeta(), inverseResult.getFi(), inverseResult.getRou(), inverseResult.getWi(), inverseResult.getPotential(), inverseResult.getIterations()));
             }

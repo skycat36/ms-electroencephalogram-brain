@@ -7,6 +7,7 @@ import com.brain.util.minimization.multiple.BitStep;
 import com.brain.util.minimization.point.Point4D;
 import com.brain.util.minimization.point.PointMinimization;
 import com.brain.util.minimization.point.ResultPoint;
+import com.brain.util.minimization.single.GoldenRatioMinimizer;
 
 import java.util.Arrays;
 import java.util.function.Function;
@@ -54,15 +55,15 @@ public class SolvingInverseProblem {
         };
 
         Function<PointMinimization, Double> norma = (point4D) -> Math.sqrt(
-                Math.pow(gradX.apply(point4D), 2) + Math.pow(gradY.apply(point4D), 2) +
-                        Math.pow(gradZ.apply(point4D), 2) + Math.pow(gradW.apply(point4D), 2)
+                Math.pow(gradX.apply(point4D), 2.) + Math.pow(gradY.apply(point4D), 2.) +
+                        Math.pow(gradZ.apply(point4D), 2.) + Math.pow(gradW.apply(point4D), 2.)
         );
         BitStep bitStepMinimization = new BitStep(funk, norma, Arrays.asList(gradX, gradY, gradZ, gradW));
 
         // Start point
-        Point4D point4D = new Point4D(4. , 5. , 3., 1.);
+        Point4D point4D = new Point4D(1. , 1. , 3., 1.);
 
-        return bitStepMinimization.minimization(point4D, eps, alfa);
+        return bitStepMinimization.minimization(point4D, eps, alfa, new GoldenRatioMinimizer());
     }
 
     private static double localizationNeuralSource(double expU, int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double rD) {

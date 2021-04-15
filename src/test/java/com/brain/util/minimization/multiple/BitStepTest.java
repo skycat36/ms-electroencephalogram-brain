@@ -4,6 +4,7 @@ import com.brain.util.minimization.point.Point2D;
 import com.brain.util.minimization.point.Point4D;
 import com.brain.util.minimization.point.PointMinimization;
 import com.brain.util.minimization.point.ResultPoint;
+import com.brain.util.minimization.single.GoldenRatioMinimizer;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -17,28 +18,28 @@ public class BitStepTest {
     public void minimizationTestPoint1D(){
 
         // F(x,y) = (x-1)^2
-        Function<PointMinimization, Double> funk = (point2D) -> Math.pow(((Point2D)point2D).getTeta() - 1, 2);
+        Function<PointMinimization, Double> funk = (point2D) -> Math.pow(((Point2D)point2D).getTeta() - 1., 2.);
         // dF/dX = 2 * (x-1)
-        Function<PointMinimization, Double> gradX = (point2D) -> 2 * (((Point2D)point2D).getTeta() - 1);
-        // dF/dY = 2 * (y-2)
+        Function<PointMinimization, Double> gradX = (point2D) -> 2 * (((Point2D)point2D).getTeta() - 1.);
+
         Function<PointMinimization, Double> gradY = (point2D) -> 0.;
         // norma = sqrt((dF/dX)^2 + (dF/dY)^2)
         Function<PointMinimization, Double> norma = (point2D) -> Math.sqrt(Math.pow(gradX.apply(point2D), 2) + Math.pow(gradY.apply(point2D), 2));
         BitStep bitStepMinimization = new BitStep(funk, norma, Arrays.asList(gradX, gradY));
 
         // inaccuracy
-        double eps = 0.5;
+        double eps = 0.01;
         // Firs step
         double alfa = 0.1;
 
         // Start point
-        Point2D point2D = new Point2D(4. , 5. );
+        Point2D point2D = new Point2D(5. , -2. );
 
-        ResultPoint resultPoint = bitStepMinimization.minimization(point2D, eps, alfa);
+        ResultPoint resultPoint = bitStepMinimization.minimization(point2D, eps, alfa, new GoldenRatioMinimizer());
 
         boolean result = false;
 
-        // Resolve equation : x = 1, y = 2
+        // Resolve equation : x = 1
         if ((1 - eps) < resultPoint.getTeta() &&  resultPoint.getTeta() < (1 + eps) ){
                 result = true;
         }
@@ -59,14 +60,14 @@ public class BitStepTest {
         BitStep bitStepMinimization = new BitStep(funk, norma, Arrays.asList(gradX, gradY));
 
         // inaccuracy
-        double eps = 0.5;
+        double eps = 0.001;
         // Firs step
         double alfa = 0.1;
 
         // Start point
         Point2D point2D = new Point2D(4. , 5. );
 
-        ResultPoint resultPoint = bitStepMinimization.minimization(point2D, eps, alfa);
+        ResultPoint resultPoint = bitStepMinimization.minimization(point2D, eps, alfa, new GoldenRatioMinimizer());
 
         boolean result = false;
 
@@ -105,14 +106,14 @@ public class BitStepTest {
         BitStep bitStepMinimization = new BitStep(funk, norma, Arrays.asList(gradX, gradY, gradZ, gradW));
 
         // Inaccuracy
-        double eps = 0.5;
+        double eps = 0.001;
         // Firs step
         double alfa = 0.1;
 
         // Start point
         Point4D point4D = new Point4D(4. , 5. , 3., 1.);
 
-        ResultPoint resultPoint = bitStepMinimization.minimization(point4D, eps, alfa);
+        ResultPoint resultPoint = bitStepMinimization.minimization(point4D, eps, alfa, new GoldenRatioMinimizer());
 
         boolean result = false;
 
@@ -127,53 +128,53 @@ public class BitStepTest {
     }
 
     //TODO Скорее всего неправельно посчитан гардиент
-    @Ignore
+//    @Ignore
     @Test
     public void minimizationTestPoint4DExample2(){
 
         // F(x,y,z,w) = exp^((x-y)^2) + exp^((z-w)^2) + x^2 + z^2
         Function<PointMinimization, Double> funk = (point4D) -> {
             Point4D point = (Point4D)point4D;
-            return Math.exp(Math.pow(point.getTeta() - point.getFi(), 2)) + Math.exp(Math.pow(point.getRou() - point.getWi(), 2)) +
-                    Math.pow(point.getTeta(), 2) + Math.pow(point.getRou(), 2);
+            return Math.exp(Math.pow(point.getTeta() - point.getFi(), 2.)) + Math.exp(Math.pow(point.getRou() - point.getWi(), 2.)) +
+                    Math.pow(point.getTeta(), 2.) + Math.pow(point.getRou(), 2.);
         };
         // dF/dX = 2 * (x-y) * exp^((x-y)^2) + (2 * x)
         Function<PointMinimization, Double> gradX = (point4D) -> {
             Point4D point = (Point4D)point4D;
-            return 2 * (point.getTeta() - point.getFi()) * Math.exp(Math.pow(point.getTeta() - point.getFi(), 2)) + 2*point.getTeta();
+            return 2. * (point.getTeta() - point.getFi()) * Math.exp(Math.pow(point.getTeta() - point.getFi(), 2.)) + 2.*point.getTeta();
         };
         // dF/dY = - (2 * (x-y) * exp^((x-y)^2) )
         Function<PointMinimization, Double> gradY = (point4D) -> {
             Point4D point = (Point4D)point4D;
-            return -2 * (point.getTeta() - point.getFi()) * Math.exp(Math.pow(point.getTeta() - point.getFi(), 2));
+            return -2. * (point.getTeta() - point.getFi()) * Math.exp(Math.pow(point.getTeta() - point.getFi(), 2.));
         };
         // dF/dZ = 2 * (z-w) * exp^((z-w)^2) + 27
         Function<PointMinimization, Double> gradZ = (point4D) -> {
             Point4D point = (Point4D)point4D;
-            return 2 * (point.getRou() - point.getWi()) * Math.exp(Math.pow(point.getRou() - point.getWi(), 2)) + 27;
+            return 2. * (point.getRou() - point.getWi()) * Math.exp(Math.pow(point.getRou() - point.getWi(), 2.)) + 27.;
         };
         // dF/dW = - (2 * (z-w) * exp^((z-w)^2) )
         Function<PointMinimization, Double> gradW = (point4D) -> {
             Point4D point = (Point4D)point4D;
-            return -2 * (point.getRou() - point.getWi()) * Math.exp(Math.pow(point.getRou() - point.getWi(), 2));
+            return -2. * (point.getRou() - point.getWi()) * Math.exp(Math.pow(point.getRou() - point.getWi(), 2.));
         };
 
         // norma = sqrt((dF/dX)^2 + (dF/dY)^2 + (dF/dZ)^2 + (dF/dW)^2)
         Function<PointMinimization, Double> norma = (point4D) -> Math.sqrt(
-                Math.pow(gradX.apply(point4D), 2) + Math.pow(gradY.apply(point4D), 2) +
-                        Math.pow(gradZ.apply(point4D), 2) + Math.pow(gradW.apply(point4D), 2)
+                Math.pow(gradX.apply(point4D), 2.) + Math.pow(gradY.apply(point4D), 2.) +
+                        Math.pow(gradZ.apply(point4D), 2.) + Math.pow(gradW.apply(point4D), 2.)
         );
         BitStep bitStepMinimization = new BitStep(funk, norma, Arrays.asList(gradX, gradY, gradZ, gradW));
 
         // Inaccuracy
-        double eps = 0.9;
+        double eps = 0.5;
         // Firs step
-        double alfa = 100;
+        double alfa = 0.1;
 
         // Start point
-        Point4D point4D = new Point4D(0. ,0. ,0.,0.);
+        Point4D point4D = new Point4D(2. ,1. ,4.,3.);
 
-        ResultPoint resultPoint = bitStepMinimization.minimization(point4D, eps, alfa);
+        ResultPoint resultPoint = bitStepMinimization.minimization(point4D, eps, alfa, new GoldenRatioMinimizer());
 
         boolean result = false;
 

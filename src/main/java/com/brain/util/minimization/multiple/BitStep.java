@@ -4,6 +4,7 @@ package com.brain.util.minimization.multiple;
 import com.brain.util.function.CoefficientUtils;
 import com.brain.util.minimization.point.PointMinimization;
 import com.brain.util.minimization.point.ResultPoint;
+import com.brain.util.minimization.single.SingleArgumentFunctionMinimizer;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -19,7 +20,7 @@ public class BitStep {
     private final Function<PointMinimization, Double> norma;
     private final List<Function<PointMinimization, Double>> gradArg;
 
-    public ResultPoint minimization(PointMinimization point, double eps, double alfa)
+    public ResultPoint minimization(PointMinimization point, double eps, double alfa, SingleArgumentFunctionMinimizer singleArgumentFunctionMinimizer)
     {
         double nor = norma.apply(point);
         double f = func.apply(point);
@@ -39,8 +40,11 @@ public class BitStep {
                 nor = norma.apply(point);
                 arrGrad = calcGradFunk(point);
             }
-            else
-                alfa /= 2.0;
+            else {
+                PointMinimization tempPoint = newPoint;
+                List<Double> tempGrad = arrGrad;
+                alfa = singleArgumentFunctionMinimizer.minimize((a) -> func.apply(tempPoint.sum(CoefficientUtils.listMul(tempGrad, a))), 0, 1, eps);
+            }
 
             newPoint = newPoint.sum(CoefficientUtils.listMul(arrGrad, -alfa));
 
