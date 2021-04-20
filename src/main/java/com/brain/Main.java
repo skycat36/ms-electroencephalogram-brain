@@ -17,7 +17,7 @@ public class Main {
     public static void main(String... args) throws Exception {
 
         StringBuffer writeData = new StringBuffer();
-        int n = 8;
+        int n = 6;
         double R1 = 9.5;
         double temp = Math.PI / 3;
 

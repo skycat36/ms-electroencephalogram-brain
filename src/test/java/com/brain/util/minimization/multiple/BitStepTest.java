@@ -6,7 +6,6 @@ import com.brain.util.minimization.point.PointMinimization;
 import com.brain.util.minimization.point.ResultPoint;
 import com.brain.util.minimization.single.GoldenRatioMinimizer;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
