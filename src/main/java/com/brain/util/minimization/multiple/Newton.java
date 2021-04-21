@@ -21,7 +21,6 @@ public class Newton {
     private final Function<PointMinimization, Double> norma;
     private final List<Function<PointMinimization, Double>> gradArg;
     private final List<List<Function<PointMinimization, Double>>> matrixGeese;
-    private final List<List<Double>> matrixReturn;
 
     public ResultPoint minimization(PointMinimization point, double eps) {
         double nor = norma.apply(point);
@@ -33,13 +32,11 @@ public class Newton {
 
         while (nor > eps) {
 
-            List<Double> mulGesse = CoefficientUtils.listMul(
-                    Objects.requireNonNull(MatrixConverter.convertMatrixToVector(
-                            MatrixConverter.convert(MatrixHelper.multiply(arrGrad, MatrixHelper.inverse(FunctionHelper.calcFunkMatrix(matrixGeese, point))).getData())
-                    ))
-                    , -1
+            List<Double> mulGesse = Objects.requireNonNull(MatrixConverter.convertMatrixToVector(
+                            MatrixConverter.convert(MatrixHelper.multiply(arrGrad, MatrixHelper.inverse(FunctionHelper.calcFunkMatrix(matrixGeese, point))).getData()))
             );
-            newPoint = point.sum(mulGesse);
+
+            newPoint = point.sum(CoefficientUtils.listMul(mulGesse, -1.));
             arrGrad = FunctionHelper.calcFunkList(gradArg, newPoint);
             nor = norma.apply(newPoint);
 

@@ -126,7 +126,6 @@ public class BitStepTest {
         Assert.assertTrue(result);
     }
 
-    //TODO Скорее всего неправельно посчитан гардиент
 //    @Ignore
     @Test
     public void minimizationTestPoint4DExample2(){

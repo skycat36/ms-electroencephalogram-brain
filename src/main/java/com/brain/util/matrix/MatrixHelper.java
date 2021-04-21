@@ -17,6 +17,6 @@ public class MatrixHelper {
 
     public static RealMatrix multiply(List<Double> vector, RealMatrix realMatrix){
         RealMatrix result = MatrixUtils.createRealMatrix(Objects.requireNonNull(MatrixConverter.convertToVector(vector)));
-        return result.multiply(realMatrix);
+        return result.transpose().multiply(realMatrix);
     }
 }
