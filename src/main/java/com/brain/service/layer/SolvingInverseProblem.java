@@ -1,6 +1,7 @@
 package com.brain.service.layer;
 
 import com.brain.util.function.CoefficientUtils;
+import com.brain.util.function.FunctionHelper;
 import com.brain.util.function.gradient.GradDerivativeLocalizationNeuralSource;
 import com.brain.util.function.gradient.GradLocalizationNeuralSource;
 import com.brain.util.minimization.multiple.BitStep;
@@ -17,41 +18,49 @@ public class SolvingInverseProblem {
     /**
      * Решение обратной задачи
      * @param n количество слоев
-     * @param teta сферическая координата тета (ед. изм. )
-     * @param fi сферическая координата fi (ед. изм. )
      * @param R1 значение ограничивающие возникновение импульса (ед. изм. )
      * @return возвращает силу потенцала в точке
      */
-    public static ResultPoint calculate(double expU, int n, double teta, double fi, double teta0, double fi0, double R1, double eps, double alfa) {
+    public static ResultPoint calculate(double expU, int n, double step, double area, double teta0, double fi0, double R1, double eps, double alfa) {
 
         Function<PointMinimization, Double> funk = (point4D) -> {
             Point4D point = (Point4D)point4D;
-            return localizationNeuralSource(expU, n, teta, fi, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi()) +
-                    derivativeLocalizationNeuralSource(n, teta, fi, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), R1, point.getWi());
+            return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
+                    (i, j) -> localizationNeuralSource(expU, n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi()) +
+                            derivativeLocalizationNeuralSource(n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), R1, point.getWi())
+            );
         };
 
         Function<PointMinimization, Double> gradX = (point4D) -> {
             Point4D point = (Point4D) point4D;
-            return GradDerivativeLocalizationNeuralSource.dFMx(n, teta, fi, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), R1, point.getWi()) +
-                    GradLocalizationNeuralSource.dFMx(expU, n, teta, fi, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi());
+            return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
+                    (i, j) -> GradDerivativeLocalizationNeuralSource.dFMx(n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), R1, point.getWi()) +
+                    GradLocalizationNeuralSource.dFMx(expU, n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
+            );
         };
 
         Function<PointMinimization, Double> gradY = (point4D) -> {
             Point4D point = (Point4D) point4D;
-            return GradDerivativeLocalizationNeuralSource.dFMy(n, teta, fi, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), R1, point.getWi()) +
-                    GradLocalizationNeuralSource.dFMy(expU, n, teta, fi, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi());
+            return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
+                    (i, j) -> GradDerivativeLocalizationNeuralSource.dFMy(n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), R1, point.getWi()) +
+                    GradLocalizationNeuralSource.dFMy(expU, n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
+            );
         };
 
         Function<PointMinimization, Double> gradZ = (point4D) -> {
             Point4D point = (Point4D) point4D;
-            return GradDerivativeLocalizationNeuralSource.dFMz(n, teta, fi, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), R1, point.getWi()) +
-                    GradLocalizationNeuralSource.dFMz(expU, n, teta, fi, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi());
+            return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
+                    (i, j) -> GradDerivativeLocalizationNeuralSource.dFMz(n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), R1, point.getWi()) +
+                    GradLocalizationNeuralSource.dFMz(expU, n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
+            );
         };
 
         Function<PointMinimization, Double> gradW = (point4D) -> {
             Point4D point = (Point4D) point4D;
-            return GradDerivativeLocalizationNeuralSource.dFrd(n, teta, fi, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), R1, point.getWi()) +
-                    GradLocalizationNeuralSource.dFrd(expU, n, teta, fi, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi());
+            return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
+                    (i, j) -> GradDerivativeLocalizationNeuralSource.dFrd(n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), R1, point.getWi()) +
+                    GradLocalizationNeuralSource.dFrd(expU, n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
+            );
         };
 
         Function<PointMinimization, Double> norma = (point4D) -> Math.sqrt(
@@ -61,7 +70,7 @@ public class SolvingInverseProblem {
         BitStep bitStepMinimization = new BitStep(funk, norma, Arrays.asList(gradX, gradY, gradZ, gradW));
 
         // Start point
-        Point4D point4D = new Point4D(1. , 1. , 3., 1.);
+        Point4D point4D = new Point4D(1. , 2. , 1., 1.);
 
         return bitStepMinimization.minimization(point4D, eps, alfa, new GoldenRatioMinimizer());
     }

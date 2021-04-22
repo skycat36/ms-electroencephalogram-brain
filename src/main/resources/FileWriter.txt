@@ -1,63 +1,23 @@
-DirectTask  -- Teta[i]: 0.0, Fi[j]: 0.0 |  rez: 0.1016653885855951 
-InverseTask -- Teta[i]: 0.0, Fi[j]: 0.0 |  rez --  mX: 1.0  | mY: 1.0 | mZ: 3.0 | rD: 1.0 | potential: 0.05934753480179929 | iterations: 0
-
-DirectTask  -- Teta[i]: 0.0, Fi[j]: 1.0471975511965976 |  rez: 0.1016653885855951 
-InverseTask -- Teta[i]: 0.0, Fi[j]: 1.0471975511965976 |  rez --  mX: 1.0  | mY: 1.0 | mZ: 3.0 | rD: 1.0 | potential: 0.12163429826475189 | iterations: 0
-
-DirectTask  -- Teta[i]: 0.0, Fi[j]: 2.0943951023931953 |  rez: 0.1016653885855951 
-InverseTask -- Teta[i]: 0.0, Fi[j]: 2.0943951023931953 |  rez --  mX: 1.0  | mY: 1.0 | mZ: 3.0 | rD: 1.0 | potential: 0.06984429397718048 | iterations: 0
-
-DirectTask  -- Teta[i]: 0.0, Fi[j]: 3.141592653589793 |  rez: 0.1016653885855951 
-InverseTask -- Teta[i]: 0.0, Fi[j]: 3.141592653589793 |  rez --  mX: 1.0  | mY: 1.0 | mZ: 3.0 | rD: 1.0 | potential: 0.026952627134518736 | iterations: 0
-
-DirectTask  -- Teta[i]: 0.0, Fi[j]: 4.1887902047863905 |  rez: 0.1016653885855951 
-InverseTask -- Teta[i]: 0.0, Fi[j]: 4.1887902047863905 |  rez --  mX: 1.0  | mY: 1.0 | mZ: 3.0 | rD: 1.0 | potential: 0.06775156555964477 | iterations: 0
-
-DirectTask  -- Teta[i]: 0.0, Fi[j]: 5.235987755982988 |  rez: 0.1016653885855951 
-InverseTask -- Teta[i]: 0.0, Fi[j]: 5.235987755982988 |  rez --  mX: 1.0  | mY: 1.0 | mZ: 3.0 | rD: 1.0 | potential: 0.05472016329832341 | iterations: 0
-
-DirectTask  -- Teta[i]: 0.0, Fi[j]: 6.283185307179585 |  rez: 0.1016653885855951 
-InverseTask -- Teta[i]: 0.0, Fi[j]: 6.283185307179585 |  rez --  mX: 1.0  | mY: 1.0 | mZ: 3.0 | rD: 1.0 | potential: 0.10630314569474007 | iterations: 0
-
-DirectTask  -- Teta[i]: 1.0471975511965976, Fi[j]: 0.0 |  rez: 0.037781860386085 
-InverseTask -- Teta[i]: 1.0471975511965976, Fi[j]: 0.0 |  rez --  mX: 1.0  | mY: 1.0 | mZ: 3.0 | rD: 1.0 | potential: 0.8397538997277956 | iterations: 0
-
-DirectTask  -- Teta[i]: 1.0471975511965976, Fi[j]: 1.0471975511965976 |  rez: 0.2279947780056468 
-InverseTask -- Teta[i]: 1.0471975511965976, Fi[j]: 1.0471975511965976 |  rez --  mX: 1.0  | mY: 1.0 | mZ: 3.0 | rD: 1.0 | potential: 0.20128777292126426 | iterations: 0
-
-DirectTask  -- Teta[i]: 1.0471975511965976, Fi[j]: 2.0943951023931953 |  rez: 0.22799477800564685 
-InverseTask -- Teta[i]: 1.0471975511965976, Fi[j]: 2.0943951023931953 |  rez --  mX: 1.0  | mY: 1.0 | mZ: 3.0 | rD: 1.0 | potential: 0.8429942672946261 | iterations: 0
-
-DirectTask  -- Teta[i]: 1.0471975511965976, Fi[j]: 3.141592653589793 |  rez: 0.037781860386085 
-InverseTask -- Teta[i]: 1.0471975511965976, Fi[j]: 3.141592653589793 |  rez --  mX: 1.0  | mY: 1.0 | mZ: 3.0 | rD: 1.0 | potential: 0.2549236916943527 | iterations: 0
-
-DirectTask  -- Teta[i]: 1.0471975511965976, Fi[j]: 4.1887902047863905 |  rez: 0.22799477800564674 
-InverseTask -- Teta[i]: 1.0471975511965976, Fi[j]: 4.1887902047863905 |  rez --  mX: 1.0  | mY: 1.0 | mZ: 3.0 | rD: 1.0 | potential: 0.663801875701996 | iterations: 0
-
-DirectTask  -- Teta[i]: 1.0471975511965976, Fi[j]: 5.235987755982988 |  rez: 0.22799477800564696 
-InverseTask -- Teta[i]: 1.0471975511965976, Fi[j]: 5.235987755982988 |  rez --  mX: 1.0  | mY: 1.0 | mZ: 3.0 | rD: 1.0 | potential: 0.15522722088925256 | iterations: 0
-
-DirectTask  -- Teta[i]: 1.0471975511965976, Fi[j]: 6.283185307179585 |  rez: 0.037781860386085 
-InverseTask -- Teta[i]: 1.0471975511965976, Fi[j]: 6.283185307179585 |  rez --  mX: 1.0  | mY: 1.0 | mZ: 3.0 | rD: 1.0 | potential: 0.3328291372587711 | iterations: 0
-
-DirectTask  -- Teta[i]: 2.0943951023931953, Fi[j]: 0.0 |  rez: 0.037781860386085005 
-InverseTask -- Teta[i]: 2.0943951023931953, Fi[j]: 0.0 |  rez --  mX: 1.0  | mY: 1.0 | mZ: 3.0 | rD: 1.0 | potential: 0.5122776120014548 | iterations: 0
-
-DirectTask  -- Teta[i]: 2.0943951023931953, Fi[j]: 1.0471975511965976 |  rez: 0.22799477800564674 
-InverseTask -- Teta[i]: 2.0943951023931953, Fi[j]: 1.0471975511965976 |  rez --  mX: 1.0  | mY: 1.0 | mZ: 3.0 | rD: 1.0 | potential: 0.5422532083429698 | iterations: 0
-
-DirectTask  -- Teta[i]: 2.0943951023931953, Fi[j]: 2.0943951023931953 |  rez: 0.22799477800564677 
-InverseTask -- Teta[i]: 2.0943951023931953, Fi[j]: 2.0943951023931953 |  rez --  mX: 1.0  | mY: 1.0 | mZ: 3.0 | rD: 1.0 | potential: 0.6439649786865066 | iterations: 0
-
-DirectTask  -- Teta[i]: 2.0943951023931953, Fi[j]: 3.141592653589793 |  rez: 0.037781860386085005 
-InverseTask -- Teta[i]: 2.0943951023931953, Fi[j]: 3.141592653589793 |  rez --  mX: 1.0  | mY: 1.0 | mZ: 3.0 | rD: 1.0 | potential: 0.3320539780816685 | iterations: 0
-
-DirectTask  -- Teta[i]: 2.0943951023931953, Fi[j]: 4.1887902047863905 |  rez: 0.22799477800564671 
-InverseTask -- Teta[i]: 2.0943951023931953, Fi[j]: 4.1887902047863905 |  rez --  mX: 1.0  | mY: 1.0 | mZ: 3.0 | rD: 1.0 | potential: 0.2486738343593802 | iterations: 0
-
-DirectTask  -- Teta[i]: 2.0943951023931953, Fi[j]: 5.235987755982988 |  rez: 0.227994778005647 
-InverseTask -- Teta[i]: 2.0943951023931953, Fi[j]: 5.235987755982988 |  rez --  mX: 1.0  | mY: 1.0 | mZ: 3.0 | rD: 1.0 | potential: 0.774722978877893 | iterations: 0
-
-DirectTask  -- Teta[i]: 2.0943951023931953, Fi[j]: 6.283185307179585 |  rez: 0.037781860386085005 
-InverseTask -- Teta[i]: 2.0943951023931953, Fi[j]: 6.283185307179585 |  rez --  mX: 1.0  | mY: 1.0 | mZ: 3.0 | rD: 1.0 | potential: 0.0060313742632375576 | iterations: 0
+DirectTask  -- Teta[i]: 0.0, Fi[j]: 0.0 |  rez: 0.41129751259604513 
+DirectTask  -- Teta[i]: 0.0, Fi[j]: 1.0471975511965976 |  rez: 0.41129751259604513 
+DirectTask  -- Teta[i]: 0.0, Fi[j]: 2.0943951023931953 |  rez: 0.41129751259604513 
+DirectTask  -- Teta[i]: 0.0, Fi[j]: 3.141592653589793 |  rez: 0.41129751259604513 
+DirectTask  -- Teta[i]: 0.0, Fi[j]: 4.1887902047863905 |  rez: 0.41129751259604513 
+DirectTask  -- Teta[i]: 0.0, Fi[j]: 5.235987755982988 |  rez: 0.41129751259604513 
+DirectTask  -- Teta[i]: 0.0, Fi[j]: 6.283185307179585 |  rez: 0.41129751259604513 
+DirectTask  -- Teta[i]: 1.0471975511965976, Fi[j]: 0.0 |  rez: 0.32686891061210827 
+DirectTask  -- Teta[i]: 1.0471975511965976, Fi[j]: 1.0471975511965976 |  rez: 0.9346027725080656 
+DirectTask  -- Teta[i]: 1.0471975511965976, Fi[j]: 2.0943951023931953 |  rez: 0.9346027725080658 
+DirectTask  -- Teta[i]: 1.0471975511965976, Fi[j]: 3.141592653589793 |  rez: 0.32686891061210827 
+DirectTask  -- Teta[i]: 1.0471975511965976, Fi[j]: 4.1887902047863905 |  rez: 0.9346027725080656 
+DirectTask  -- Teta[i]: 1.0471975511965976, Fi[j]: 5.235987755982988 |  rez: 0.9346027725080663 
+DirectTask  -- Teta[i]: 1.0471975511965976, Fi[j]: 6.283185307179585 |  rez: 0.32686891061210827 
+DirectTask  -- Teta[i]: 2.0943951023931953, Fi[j]: 0.0 |  rez: 0.32686891061210827 
+DirectTask  -- Teta[i]: 2.0943951023931953, Fi[j]: 1.0471975511965976 |  rez: 0.9346027725080659 
+DirectTask  -- Teta[i]: 2.0943951023931953, Fi[j]: 2.0943951023931953 |  rez: 0.934602772508066 
+DirectTask  -- Teta[i]: 2.0943951023931953, Fi[j]: 3.141592653589793 |  rez: 0.32686891061210827 
+DirectTask  -- Teta[i]: 2.0943951023931953, Fi[j]: 4.1887902047863905 |  rez: 0.9346027725080657 
+DirectTask  -- Teta[i]: 2.0943951023931953, Fi[j]: 5.235987755982988 |  rez: 0.9346027725080663 
+DirectTask  -- Teta[i]: 2.0943951023931953, Fi[j]: 6.283185307179585 |  rez: 0.32686891061210827 
+InverseTask -- rez --  mX: 1.4656642851842583  | mY: 2.8886554774038076 | mZ: 1.1648992965974851 | rD: 2.2497587423476695 | potential: 3185.0270350335004 | iterations: 1180
 

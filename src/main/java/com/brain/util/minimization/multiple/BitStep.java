@@ -29,29 +29,36 @@ public class BitStep {
 
         List<Double> arrGrad = FunctionHelper.calcFunkList(gradArg,point);
         PointMinimization newPoint = point.sum(CoefficientUtils.listMul(arrGrad, -alfa));
+        double prevVal = nor;
+        int prevCh = 0;
+        int zn = -1;
 
-        while (nor > eps)
-        {
-
-            if (func.apply(newPoint) < f)
-            {
+        while (Double.isNaN(nor) || nor > eps) {
+            int finalZn = zn;
+            if (func.apply(newPoint) < f) {
                 point = newPoint;
-                f = func.apply(point);
-                nor = norma.apply(point);
                 arrGrad = FunctionHelper.calcFunkList(gradArg, point);
             }
             else {
                 PointMinimization tempPoint = newPoint;
                 List<Double> tempGrad = arrGrad;
-                alfa = singleArgumentFunctionMinimizer.minimize((a) -> func.apply(tempPoint.sum(CoefficientUtils.listMul(tempGrad, a))), 0, 1, eps);
+                alfa = singleArgumentFunctionMinimizer.minimize((a) -> func.apply(tempPoint.sum(CoefficientUtils.listMul(tempGrad, finalZn * a))), -5, 5, 0.5);
             }
 
-            newPoint = newPoint.sum(CoefficientUtils.listMul(arrGrad, -alfa));
+            prevVal = nor;
+            newPoint = newPoint.sum(CoefficientUtils.listMul(arrGrad, zn * alfa));
+            nor = norma.apply(newPoint);
 
+            if (prevCh > 3){
+                zn *= -1;
+                prevCh = 0;
+            } else {
+                prevCh += prevVal < nor ? 1 : 0;
+            }
             iterations++;
         }
 
-        return ResultPoint.getResultPoint(point, iterations, f);
+        return ResultPoint.getResultPoint(point, iterations, func.apply(point));
     }
 
 }

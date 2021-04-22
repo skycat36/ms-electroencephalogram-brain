@@ -59,12 +59,12 @@ public class BitStepTest {
         BitStep bitStepMinimization = new BitStep(funk, norma, Arrays.asList(gradX, gradY));
 
         // inaccuracy
-        double eps = 0.001;
+        double eps = 0.01;
         // Firs step
-        double alfa = 0.1;
+        double alfa = 0.6;
 
         // Start point
-        Point2D point2D = new Point2D(4. , 5. );
+        Point2D point2D = new Point2D(3. , -1. );
 
         ResultPoint resultPoint = bitStepMinimization.minimization(point2D, eps, alfa, new GoldenRatioMinimizer());
 
@@ -107,7 +107,7 @@ public class BitStepTest {
         // Inaccuracy
         double eps = 0.001;
         // Firs step
-        double alfa = 0.1;
+        double alfa = 0.6;
 
         // Start point
         Point4D point4D = new Point4D(4. , 5. , 3., 1.);
@@ -165,9 +165,9 @@ public class BitStepTest {
         BitStep bitStepMinimization = new BitStep(funk, norma, Arrays.asList(gradX, gradY, gradZ, gradW));
 
         // Inaccuracy
-        double eps = 0.5;
+        double eps = 0.1;
         // Firs step
-        double alfa = 0.1;
+        double alfa = 0.2;
 
         // Start point
         Point4D point4D = new Point4D(2. ,1. ,4.,3.);

@@ -9,6 +9,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Main {
@@ -19,19 +21,26 @@ public class Main {
         StringBuffer writeData = new StringBuffer();
         int n = 6;
         double R1 = 9.5;
-        double temp = Math.PI / 3;
+        double step = Math.PI / 3;
 
-        for (double i = 0; i < Math.PI; i+=temp){
-            for (double j = 0; j < 2 * Math.PI; j+=temp){
+        List<Double> arrDirectResult = new ArrayList<>();
+        for (double i = 0; i < Math.PI; i+=step){
+            for (double j = 0; j < 2 * Math.PI; j+=step){
 
-                double directResult = SolvingDirectTask.calculate(n, i, j, 0.9, 0.4, 0.1, R1, 4);
+                double directResult = SolvingDirectTask.calculate(n, i, j, 1, 1, 3, R1, 1);
                 writeData.append(String.format("DirectTask  -- Teta[i]: %s, Fi[j]: %s |  rez: %s \n", i, j, directResult));
+                arrDirectResult.add(directResult);
 
-                ResultPoint inverseResult = SolvingInverseProblem.calculate(directResult + new Random().nextDouble()%1., n, i, j, 1., 1., R1, 0.1, 0.5);
-                writeData.append(String.format("InverseTask -- Teta[i]: %s, Fi[j]: %s |  rez --  mX: %s  | mY: %s | mZ: %s | rD: %s | potential: %s | iterations: %s\n\n",
-                        i, j, inverseResult.getTeta(), inverseResult.getFi(), inverseResult.getRou(), inverseResult.getWi(), inverseResult.getPotential(), inverseResult.getIterations()));
+//                ResultPoint inverseResult = SolvingInverseProblem.calculate(directResult + new Random().nextDouble()%1., n, i, j, 1., 1., R1, 0.1, 0.5);
+//                writeData.append(String.format("InverseTask -- Teta[i]: %s, Fi[j]: %s |  rez --  mX: %s  | mY: %s | mZ: %s | rD: %s | potential: %s | iterations: %s\n\n",
+//                        i, j, inverseResult.getTeta(), inverseResult.getFi(), inverseResult.getRou(), inverseResult.getWi(), inverseResult.getPotential(), inverseResult.getIterations()));
             }
         }
+
+        ResultPoint inverseResult = SolvingInverseProblem.calculate(arrDirectResult.stream().mapToDouble(i -> i).sum() + new Random().nextDouble()%1. * 0,
+                n, step, Math.PI, 1, 1, R1, 0.5, 1);
+        writeData.append(String.format("InverseTask -- rez --  mX: %s  | mY: %s | mZ: %s | rD: %s | potential: %s | iterations: %s\n\n",
+                inverseResult.getTeta(), inverseResult.getFi(), inverseResult.getRou(), inverseResult.getWi(), inverseResult.getPotential(), inverseResult.getIterations()));
 
         writeUsingFiles("E:\\magister\\ms-electroencephalogram-brain\\src\\main\\resources", "FileWriter.txt", writeData.toString());
     }
