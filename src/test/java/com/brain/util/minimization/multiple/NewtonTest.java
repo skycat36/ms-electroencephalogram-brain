@@ -42,16 +42,16 @@ public class NewtonTest {
 
         // norma = sqrt((dF/dX)^2 + (dF/dY)^2)
         Function<PointMinimization, Double> norma = (point2D) -> Math.sqrt(Math.pow(gradX.apply(point2D), 2) + Math.pow(gradY.apply(point2D), 2));
-        Newton newtonMini = new Newton(funk, norma, Arrays.asList(gradX, gradY), matrixGeese);
 
         // inaccuracy
         double eps = 0.0001;
-        // Firs step
+
+        Newton newtonMini = new Newton(funk, norma, Arrays.asList(gradX, gradY), matrixGeese, eps);
 
         // Start point
         Point2D point2D = new Point2D(4. , 5. );
 
-        ResultPoint resultPoint = newtonMini.minimization(point2D, eps);
+        ResultPoint resultPoint = newtonMini.minimization(point2D);
 
         boolean result = false;
 
@@ -130,15 +130,15 @@ public class NewtonTest {
                         Math.pow(gradZ.apply(point4D), 2) + Math.pow(gradW.apply(point4D), 2)
         );
 
-        Newton newtonMini = new Newton(funk, norma, Arrays.asList(gradX, gradY, gradZ, gradW), matrixGeese);
-
         // Inaccuracy
         double eps = 0.001;
+
+        Newton newtonMini = new Newton(funk, norma, Arrays.asList(gradX, gradY, gradZ, gradW), matrixGeese, eps);
 
         // Start point
         Point4D point4D = new Point4D(4. , 5. , 3., 1.);
 
-        ResultPoint resultPoint = newtonMini.minimization(point4D, eps);
+        ResultPoint resultPoint = newtonMini.minimization(point4D);
 
         boolean result = false;
 
@@ -277,15 +277,15 @@ public class NewtonTest {
                         Math.pow(gradZ.apply(point4D), 2.) + Math.pow(gradW.apply(point4D), 2.)
         );
 
-        Newton newtonMini = new Newton(funk, norma, Arrays.asList(gradX, gradY, gradZ, gradW), matrixGeese);
-
         // Inaccuracy
         double eps = 0.5;
+
+        Newton newtonMini = new Newton(funk, norma, Arrays.asList(gradX, gradY, gradZ, gradW), matrixGeese, eps);
 
         // Start point
         Point4D point4D = new Point4D(7. ,4. ,4.,3.);
 
-        ResultPoint resultPoint = newtonMini.minimization(point4D, eps);
+        ResultPoint resultPoint = newtonMini.minimization(point4D);
 
         boolean result = false;
 

@@ -15,14 +15,16 @@ import java.util.function.Function;
 
 @Data
 @RequiredArgsConstructor
-public class Newton {
+public class Newton implements MultipleMinimization {
 
     private final Function<PointMinimization, Double> func;
     private final Function<PointMinimization, Double> norma;
     private final List<Function<PointMinimization, Double>> gradArg;
     private final List<List<Function<PointMinimization, Double>>> matrixGeese;
+    private final double eps;
 
-    public ResultPoint minimization(PointMinimization point, double eps) {
+    @Override
+    public ResultPoint minimization(PointMinimization point) {
         double nor = norma.apply(point);
         List<Double> arrGrad = FunctionHelper.calcFunkList(gradArg, point);
 

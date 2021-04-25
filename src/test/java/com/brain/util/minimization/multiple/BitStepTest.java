@@ -24,17 +24,17 @@ public class BitStepTest {
         Function<PointMinimization, Double> gradY = (point2D) -> 0.;
         // norma = sqrt((dF/dX)^2 + (dF/dY)^2)
         Function<PointMinimization, Double> norma = (point2D) -> Math.sqrt(Math.pow(gradX.apply(point2D), 2) + Math.pow(gradY.apply(point2D), 2));
-        BitStep bitStepMinimization = new BitStep(funk, norma, Arrays.asList(gradX, gradY));
+
 
         // inaccuracy
         double eps = 0.01;
-        // Firs step
-        double alfa = 0.1;
+
+        BitStep bitStepMinimization = new BitStep(funk, norma, Arrays.asList(gradX, gradY), new GoldenRatioMinimizer(), eps);
 
         // Start point
         Point2D point2D = new Point2D(5. , -2. );
 
-        ResultPoint resultPoint = bitStepMinimization.minimization(point2D, eps, alfa, new GoldenRatioMinimizer());
+        ResultPoint resultPoint = bitStepMinimization.minimization(point2D);
 
         boolean result = false;
 
@@ -56,17 +56,16 @@ public class BitStepTest {
         Function<PointMinimization, Double> gradY = (point2D) -> 2 * (((Point2D)point2D).getFi() - 2);
         // norma = sqrt((dF/dX)^2 + (dF/dY)^2)
         Function<PointMinimization, Double> norma = (point2D) -> Math.sqrt(Math.pow(gradX.apply(point2D), 2) + Math.pow(gradY.apply(point2D), 2));
-        BitStep bitStepMinimization = new BitStep(funk, norma, Arrays.asList(gradX, gradY));
 
         // inaccuracy
         double eps = 0.01;
-        // Firs step
-        double alfa = 0.6;
+
+        BitStep bitStepMinimization = new BitStep(funk, norma, Arrays.asList(gradX, gradY), new GoldenRatioMinimizer(), eps);
 
         // Start point
         Point2D point2D = new Point2D(3. , -1. );
 
-        ResultPoint resultPoint = bitStepMinimization.minimization(point2D, eps, alfa, new GoldenRatioMinimizer());
+        ResultPoint resultPoint = bitStepMinimization.minimization(point2D);
 
         boolean result = false;
 
@@ -102,17 +101,17 @@ public class BitStepTest {
                 Math.pow(gradX.apply(point4D), 2) + Math.pow(gradY.apply(point4D), 2) +
                         Math.pow(gradZ.apply(point4D), 2) + Math.pow(gradW.apply(point4D), 2)
         );
-        BitStep bitStepMinimization = new BitStep(funk, norma, Arrays.asList(gradX, gradY, gradZ, gradW));
 
         // Inaccuracy
         double eps = 0.0001;
-        // Firs step
-        double alfa = 0.6;
+
+        BitStep bitStepMinimization = new BitStep(funk, norma, Arrays.asList(gradX, gradY, gradZ, gradW),
+                new GoldenRatioMinimizer(), eps);
 
         // Start point
         Point4D point4D = new Point4D(4. , 5. , 3., 1.);
 
-        ResultPoint resultPoint = bitStepMinimization.minimization(point4D, eps, alfa, new GoldenRatioMinimizer());
+        ResultPoint resultPoint = bitStepMinimization.minimization(point4D);
 
         boolean result = false;
 
@@ -162,17 +161,18 @@ public class BitStepTest {
                 Math.pow(gradX.apply(point4D), 2.) + Math.pow(gradY.apply(point4D), 2.) +
                         Math.pow(gradZ.apply(point4D), 2.) + Math.pow(gradW.apply(point4D), 2.)
         );
-        BitStep bitStepMinimization = new BitStep(funk, norma, Arrays.asList(gradX, gradY, gradZ, gradW));
 
         // Inaccuracy
         double eps = 0.1;
-        // Firs step
-        double alfa = 0.2;
+
+
+        BitStep bitStepMinimization = new BitStep(funk, norma, Arrays.asList(gradX, gradY, gradZ, gradW),
+                new GoldenRatioMinimizer(), eps);
 
         // Start point
         Point4D point4D = new Point4D(2. ,1. ,4.,3.);
 
-        ResultPoint resultPoint = bitStepMinimization.minimization(point4D, eps, alfa, new GoldenRatioMinimizer());
+        ResultPoint resultPoint = bitStepMinimization.minimization(point4D);
 
         boolean result = false;
 

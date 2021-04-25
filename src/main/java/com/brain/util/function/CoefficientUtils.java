@@ -64,11 +64,11 @@ public class CoefficientUtils {
 
     public static double coefficientEL(double expU, int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double rD) {
 
-        double result = (mX * coefficientSum(n, rD, (L) -> coefficientAL(teta, fi, teta0, fi0, L)) -
+        double result = (-mX * coefficientSum(n, rD, (L) -> coefficientAL(teta, fi, teta0, fi0, L)) -
                         mY * coefficientSum(n, rD, (L) -> coefficientCL(teta, fi, teta0, fi0, L)) -
                         mZ * coefficientSum(n, rD, (L) -> coefficientBL(teta, fi, teta0, fi0, L)));
 
-        return 2 * (expU - result);
+        return 2 * (expU + result);
     }
 
     public static double coefficientTL(int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double R1, double rD) {

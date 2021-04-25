@@ -14,14 +14,17 @@ import java.util.function.Function;
 
 @Data
 @RequiredArgsConstructor
-public class BitStep {
+public class BitStep implements MultipleMinimization {
 
     private final Function<PointMinimization, Double> func;
     private final Function<PointMinimization, Double> norma;
     private final List<Function<PointMinimization, Double>> gradArg;
+    private final SingleArgumentFunctionMinimizer singleArgumentFunctionMinimizer;
+    private final double eps;
 
-    public ResultPoint minimization(PointMinimization point, double eps, double alfa, SingleArgumentFunctionMinimizer singleArgumentFunctionMinimizer)
-    {
+    @Override
+    public ResultPoint minimization(PointMinimization point) {
+        double alfa = 0;
         double nor = norma.apply(point);
         double f = func.apply(point);
 
@@ -29,7 +32,7 @@ public class BitStep {
 
         List<Double> arrGrad = FunctionHelper.calcFunkList(gradArg,point);
         PointMinimization newPoint = point.sum(CoefficientUtils.listMul(arrGrad, -alfa));
-        double prevVal = nor;
+        double prevVal;
         int prevCh = 0;
         int zn = -1;
 
