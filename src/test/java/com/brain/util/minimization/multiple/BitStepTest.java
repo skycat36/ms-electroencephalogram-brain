@@ -105,7 +105,7 @@ public class BitStepTest {
         BitStep bitStepMinimization = new BitStep(funk, norma, Arrays.asList(gradX, gradY, gradZ, gradW));
 
         // Inaccuracy
-        double eps = 0.001;
+        double eps = 0.0001;
         // Firs step
         double alfa = 0.6;
 

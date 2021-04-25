@@ -45,22 +45,21 @@ public class CoefficientUtils {
         return result;
     }
 
+    private static double temporaryCoefficient(int L){
+        return (2 * L + 1) / ((4 * Math.PI * ConstantUtils.SIGMA_3) * Math.pow(ConstantUtils.R_1, L + 1) *
+                CoefficientUtils.calculateMatrixB(L, 1).get(0).get(0));
+    }
+
     public static double coefficientAL(double teta, double fi, double teta0, double fi0, int L) throws RuntimeException {
-        double temp = (2 * L + 1) / ((4 * Math.PI * ConstantUtils.SIGMA_3) * Math.pow(ConstantUtils.R_1, L + 1) *
-                L * CoefficientUtils.calculateMatrixB(L, 1).get(0).get(0));
-        return temp * (NormMultiplier.Y(L, 1, teta, fi) - NormMultiplier.Y(L, 1, teta0, fi0));
+        return (temporaryCoefficient(L) / L) * (NormMultiplier.Y(L, 1, teta, fi) - NormMultiplier.Y(L, 1, teta0, fi0));
     }
 
     public static double coefficientBL(double teta, double fi, double teta0, double fi0, int L) throws RuntimeException {
-        double temp = (2 * L + 1) / ((4 * Math.PI * ConstantUtils.SIGMA_3) * Math.pow(ConstantUtils.R_1, L + 1) *
-                CoefficientUtils.calculateMatrixB(L, 1).get(0).get(0));
-        return temp * (NormMultiplier.Y(L, 0, teta, fi) - NormMultiplier.Y(L, 0, teta0, fi0));
+        return temporaryCoefficient(L) * (NormMultiplier.Y(L, 0, teta, fi) - NormMultiplier.Y(L, 0, teta0, fi0));
     }
 
     public static double coefficientCL(double teta, double fi, double teta0, double fi0, int L) throws RuntimeException {
-        double temp = (2 * L + 1) / ((4 * Math.PI * ConstantUtils.SIGMA_3) * Math.pow(ConstantUtils.R_1, L + 1) *
-                L * CoefficientUtils.calculateMatrixB(L, 1).get(0).get(0));
-        return temp * (NormMultiplier.Y(L, -1, teta, fi) - NormMultiplier.Y(L, 1, teta0, fi0));
+        return (temporaryCoefficient(L) / L) * (NormMultiplier.Y(L, -1, teta, fi) - NormMultiplier.Y(L, 1, teta0, fi0));
     }
 
     public static double coefficientEL(double expU, int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double rD) {

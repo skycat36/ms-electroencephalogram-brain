@@ -37,12 +37,7 @@ public class Main {
             }
         }
 
-        ResultPoint inverseResult = SolvingInverseProblem.calculate(arrDirectResult.stream().mapToDouble(i -> i).sum() + new Random().nextDouble()%1. * 0,
-                n, step, Math.PI, 1, 1, R1, 0.5, 1);
-        writeData.append(String.format("InverseTask -- rez --  mX: %s  | mY: %s | mZ: %s | rD: %s | potential: %s | iterations: %s\n\n",
-                inverseResult.getTeta(), inverseResult.getFi(), inverseResult.getRou(), inverseResult.getWi(), inverseResult.getPotential(), inverseResult.getIterations()));
-
-        writeUsingFiles("E:\\magister\\ms-electroencephalogram-brain\\src\\main\\resources", "FileWriter.txt", writeData.toString());
+        writeUsingFiles("C:\\vegas\\homework\\ms-electroencephalogram-brain\\src\\main\\resources", "FileWriter.txt", writeData.toString());
     }
 
     private static String readUsingFiles(String fileName) throws IOException {
