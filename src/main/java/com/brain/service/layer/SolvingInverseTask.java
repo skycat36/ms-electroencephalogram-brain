@@ -12,10 +12,7 @@ public class SolvingInverseTask {
 
     private final AbstractResolveInverseTask solvingInverseProblem;
 
-    public ResultPoint calculate(double expU, int n, double step, double area, double teta0, double fi0, double R1, double eps){
-        // Start point
-        Point4D point4D = new Point4D(1. , 2. , 1., 1.);
-
+    public ResultPoint calculate(double expU, int n, double step, double area, double teta0, double fi0, double R1, double eps, Point4D point4D){
         return solvingInverseProblem.calculate(expU, n, step, area, teta0, fi0, R1, eps).minimization(point4D);
     }
 }

@@ -3,6 +3,8 @@ package com.brain;
 import com.brain.service.layer.SolvingDirectTask;
 import com.brain.service.layer.SolvingInverseTask;
 import com.brain.service.layer.inverse.BitStepInverseResolveProcessor;
+import com.brain.service.layer.inverse.NewtonInverseResolveProcessor;
+import com.brain.util.minimization.point.Point4D;
 import com.brain.util.minimization.point.ResultPoint;
 
 import java.io.File;
@@ -20,7 +22,7 @@ public class Main {
     public static void main(String... args) throws Exception {
 
         StringBuffer writeData = new StringBuffer();
-        int n = 6;
+        int n = 3;
         double R1 = 9.5;
         double step = Math.PI / 3;
 
@@ -35,10 +37,11 @@ public class Main {
             }
         }
 
+        Point4D point4D = new Point4D(0.001 , 0.001 , 0.001, 0.001);
 
-        ResultPoint inverseResult = new SolvingInverseTask(new BitStepInverseResolveProcessor())
+        ResultPoint inverseResult = new SolvingInverseTask(new NewtonInverseResolveProcessor())
                 .calculate(arrDirectResult.stream().mapToDouble(i -> i).sum() + new Random().nextDouble()%1. * 0,
-                n, step, Math.PI, 1, 1, R1, 0.5);
+                n, step, Math.PI, 1, 1, R1, 0.5, point4D);
         
         writeData.append(String.format("InverseTask -- rez --  mX: %s  | mY: %s | mZ: %s | rD: %s | potential: %s | iterations: %s\n\n",
                 inverseResult.getTeta(), inverseResult.getFi(), inverseResult.getRou(), inverseResult.getWi(), inverseResult.getPotential(), inverseResult.getIterations()));

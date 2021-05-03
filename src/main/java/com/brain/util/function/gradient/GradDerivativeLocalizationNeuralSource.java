@@ -96,19 +96,18 @@ public class GradDerivativeLocalizationNeuralSource {
         Function<Integer, Double> subFunction = (L) -> ((L * L)- 1) / R1;
 
         double result =
-                (mX * CoefficientUtils.coefficientSum(2, n, 1. / rD, (L) -> subFunction.apply(L) *     CoefficientUtils.coefficientAL(teta, fi, teta0, fi0, L)) +
-                 mY * CoefficientUtils.coefficientSum(2, n, 1. / rD, (L) -> subFunction.apply(L) *     CoefficientUtils.coefficientCL(teta, fi, teta0, fi0, L)) +
-                 mZ * CoefficientUtils.coefficientSum(2, n, 1. / rD, (L) -> subFunction.apply(L) * L * CoefficientUtils.coefficientBL(teta, fi, teta0, fi0, L)));
-
+                (mX * CoefficientUtils.coefficientSum(2, n, rD, (L) -> (1. / rD) * subFunction.apply(L) *     CoefficientUtils.coefficientAL(teta, fi, teta0, fi0, L)) +
+                 mY * CoefficientUtils.coefficientSum(2, n, rD, (L) -> (1. / rD) * subFunction.apply(L) *     CoefficientUtils.coefficientCL(teta, fi, teta0, fi0, L)) +
+                 mZ * CoefficientUtils.coefficientSum(2, n, rD, (L) -> (1. / rD) * subFunction.apply(L) * L * CoefficientUtils.coefficientBL(teta, fi, teta0, fi0, L)));
         return -result;
     }
 
     public static double d2FRd(double expU, int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double R1, double rD) {
         Function<Integer, Double> subFunction = (L) -> (((L * L) - 1) * (L - 2)) / R1;
 
-        double dTLd2Rd = -(mX * CoefficientUtils.coefficientSum(3, n, 1. / (rD * rD), (L) -> subFunction.apply(L) *     CoefficientUtils.coefficientAL(teta, fi, teta0, fi0, L)) +
-                           mY * CoefficientUtils.coefficientSum(3, n, 1. / (rD * rD), (L) -> subFunction.apply(L) *     CoefficientUtils.coefficientCL(teta, fi, teta0, fi0, L)) +
-                           mZ * CoefficientUtils.coefficientSum(3, n, 1. / (rD * rD), (L) -> subFunction.apply(L) * L * CoefficientUtils.coefficientBL(teta, fi, teta0, fi0, L)));
+        double dTLd2Rd = -(mX * CoefficientUtils.coefficientSum(3, n, rD, (L) -> (1. / (rD * rD)) * subFunction.apply(L) *     CoefficientUtils.coefficientAL(teta, fi, teta0, fi0, L)) +
+                           mY * CoefficientUtils.coefficientSum(3, n, rD, (L) -> (1. / (rD * rD)) * subFunction.apply(L) *     CoefficientUtils.coefficientCL(teta, fi, teta0, fi0, L)) +
+                           mZ * CoefficientUtils.coefficientSum(3, n, rD, (L) -> (1. / (rD * rD)) * subFunction.apply(L) * L * CoefficientUtils.coefficientBL(teta, fi, teta0, fi0, L)));
 
         return  2 * Math.pow(dTLdRd(n, teta, fi, teta0, fi0, mX, mY, mZ, R1, rD), 2) +
                 CoefficientUtils.coefficientTL(n, teta, fi, teta0, fi0, mX, mY, mZ, R1, rD) * dTLd2Rd;
@@ -116,21 +115,21 @@ public class GradDerivativeLocalizationNeuralSource {
 
     public static double dFRdMx(int n, double teta, double fi, double teta0, double fi0, double R1, double rD) {
         Function<Integer, Double> subFunction = (L) -> ((L * L) - 1) / R1;
-        double dTLdRdMx = - CoefficientUtils.coefficientSum(2, n, 1. / rD, (L) -> subFunction.apply(L) * CoefficientUtils.coefficientAL(teta, fi, teta0, fi0, L));
+        double dTLdRdMx = - CoefficientUtils.coefficientSum(2, n, rD, (L) -> (1. / rD) * subFunction.apply(L) * CoefficientUtils.coefficientAL(teta, fi, teta0, fi0, L));
 
         return 2 * dTLdMx(n, teta, fi, teta0, fi0, R1, rD) + dTLdRdMx;
     }
 
     public static double dFRdMy(int n, double teta, double fi, double teta0, double fi0, double R1, double rD) {
         Function<Integer, Double> subFunction = (L) -> ((L * L) - 1) / R1;
-        double dTLdRdMy = - CoefficientUtils.coefficientSum(2, n, 1. / rD, (L) -> subFunction.apply(L) * CoefficientUtils.coefficientCL(teta, fi, teta0, fi0, L));
+        double dTLdRdMy = - CoefficientUtils.coefficientSum(2, n, rD, (L) -> (1. / rD) * subFunction.apply(L) * CoefficientUtils.coefficientCL(teta, fi, teta0, fi0, L));
 
         return 2 * dTLdMy(n, teta, fi, teta0, fi0, R1, rD) + dTLdRdMy;
     }
 
     public static double dFRdMz(int n, double teta, double fi, double teta0, double fi0, double R1, double rD) {
         Function<Integer, Double> subFunction = (L) -> (((L * L) - 1) * L) / R1;
-        double dTLdRdMz = - CoefficientUtils.coefficientSum(2, n, 1. / rD, (L) -> subFunction.apply(L) * CoefficientUtils.coefficientBL(teta, fi, teta0, fi0, L));
+        double dTLdRdMz = - CoefficientUtils.coefficientSum(2, n, rD, (L) -> (1. / rD) * subFunction.apply(L) * CoefficientUtils.coefficientBL(teta, fi, teta0, fi0, L));
 
         return 2 * dTLdMz(n, teta, fi, teta0, fi0, R1, rD) + dTLdRdMz;
     }

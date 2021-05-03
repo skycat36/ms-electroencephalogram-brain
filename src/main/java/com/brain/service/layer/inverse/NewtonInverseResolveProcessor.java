@@ -3,9 +3,12 @@ package com.brain.service.layer.inverse;
 import com.brain.util.function.FunctionHelper;
 import com.brain.util.function.gradient.GradDerivativeLocalizationNeuralSource;
 import com.brain.util.function.gradient.GradLocalizationNeuralSource;
+import com.brain.util.minimization.multiple.BitStep;
 import com.brain.util.minimization.multiple.MultipleMinimization;
+import com.brain.util.minimization.multiple.Newton;
 import com.brain.util.minimization.point.Point4D;
 import com.brain.util.minimization.point.PointMinimization;
+import com.brain.util.minimization.single.GoldenRatioMinimizer;
 
 import java.util.Arrays;
 import java.util.List;
@@ -93,29 +96,112 @@ public class NewtonInverseResolveProcessor extends AbstractResolveInverseTask {
 
 
         // dF/dXdY
-        Function<PointMinimization, Double> dfDxDy = (point2D) -> 0.;
+        Function<PointMinimization, Double> dfDxDy = (point4D) -> {
+            Point4D point = (Point4D) point4D;
+            return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
+                    (i, j) -> GradDerivativeLocalizationNeuralSource.dFMxMy(n, i, j, teta0, fi0, R1, point.getWi()) +
+                            GradLocalizationNeuralSource.dFMxMy(n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
+            );
+        };
+
         // dF/dYdX
-        Function<PointMinimization, Double> dfDyDx = (point2D) -> 0.;
+        Function<PointMinimization, Double> dfDyDx = (point4D) -> {
+            Point4D point = (Point4D) point4D;
+            return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
+                    (i, j) -> GradDerivativeLocalizationNeuralSource.dFMyMx(n, i, j, teta0, fi0, R1, point.getWi()) +
+                            GradLocalizationNeuralSource.dFMyMx(n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
+            );
+        };
+
         // dF/dXdZ
-        Function<PointMinimization, Double> dfDxDz = (point2D) -> 0.;
+        Function<PointMinimization, Double> dfDxDz = (point4D) -> {
+            Point4D point = (Point4D) point4D;
+            return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
+                    (i, j) -> GradDerivativeLocalizationNeuralSource.dFMxMz(n, i, j, teta0, fi0, R1, point.getWi()) +
+                            GradLocalizationNeuralSource.dFMxMz(n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
+            );
+        };
+
         // dF/dZdX
-        Function<PointMinimization, Double> dfDzDx = (point2D) -> 0.;
+        Function<PointMinimization, Double> dfDzDx = (point4D) -> {
+            Point4D point = (Point4D) point4D;
+            return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
+                    (i, j) -> GradDerivativeLocalizationNeuralSource.dFMzMx(n, i, j, teta0, fi0, R1, point.getWi()) +
+                            GradLocalizationNeuralSource.dFMzMx(n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
+            );
+        };
+
         // dF/dYdZ
-        Function<PointMinimization, Double> dfDyDz = (point2D) -> 0.;
+        Function<PointMinimization, Double> dfDyDz = (point4D) -> {
+            Point4D point = (Point4D) point4D;
+            return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
+                    (i, j) -> GradDerivativeLocalizationNeuralSource.dFMyMz(n, i, j, teta0, fi0, R1, point.getWi()) +
+                            GradLocalizationNeuralSource.dFMyMz(n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
+            );
+        };
+
         // dF/dZdY
-        Function<PointMinimization, Double> dfDzDy = (point2D) -> 0.;
+        Function<PointMinimization, Double> dfDzDy = (point4D) -> {
+            Point4D point = (Point4D) point4D;
+            return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
+                    (i, j) -> GradDerivativeLocalizationNeuralSource.dFMzMy(n, i, j, teta0, fi0, R1, point.getWi()) +
+                            GradLocalizationNeuralSource.dFMzMy(n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
+            );
+        };
+
         // dF/dWdX
-        Function<PointMinimization, Double> dfDwDx = (point2D) -> 0.;
+        Function<PointMinimization, Double> dfDwDx = (point4D) -> {
+            Point4D point = (Point4D) point4D;
+            return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
+                    (i, j) -> GradDerivativeLocalizationNeuralSource.dFRdMx(n, i, j, teta0, fi0, R1, point.getWi()) +
+                            GradLocalizationNeuralSource.dFRdMx(expU, n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
+            );
+        };
+
         // dF/dWdZ
-        Function<PointMinimization, Double> dfDwDz = (point2D) -> 0.;
+        Function<PointMinimization, Double> dfDwDz = (point4D) -> {
+            Point4D point = (Point4D) point4D;
+            return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
+                    (i, j) -> GradDerivativeLocalizationNeuralSource.dFRdMz(n, i, j, teta0, fi0, R1, point.getWi()) +
+                            GradLocalizationNeuralSource.dFRdMz(expU, n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
+            );
+        };
+
         // dF/dWdY
-        Function<PointMinimization, Double> dfDwDy = (point2D) -> 0.;
+        Function<PointMinimization, Double> dfDwDy = (point4D) -> {
+            Point4D point = (Point4D) point4D;
+            return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
+                    (i, j) -> GradDerivativeLocalizationNeuralSource.dFRdMy(n, i, j, teta0, fi0, R1, point.getWi()) +
+                            GradLocalizationNeuralSource.dFRdMy(expU, n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
+            );
+        };
+
         // dF/dXdW
-        Function<PointMinimization, Double> dfDxDw = (point2D) -> 0.;
+        Function<PointMinimization, Double> dfDxDw = (point4D) -> {
+            Point4D point = (Point4D) point4D;
+            return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
+                    (i, j) -> GradDerivativeLocalizationNeuralSource.dFMxRd(n, i, j, teta0, fi0, R1, point.getWi()) +
+                            GradLocalizationNeuralSource.dFMxRd(expU, n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
+            );
+        };
+
         // dF/dYdW
-        Function<PointMinimization, Double> dfDyDw = (point2D) -> 0.;
+        Function<PointMinimization, Double> dfDyDw = (point4D) -> {
+            Point4D point = (Point4D) point4D;
+            return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
+                    (i, j) -> GradDerivativeLocalizationNeuralSource.dFMyRd(expU, n, i, j, teta0, fi0, R1, point.getWi()) +
+                            GradLocalizationNeuralSource.dFMyRd(expU, n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
+            );
+        };
+
         // dF/dZdW
-        Function<PointMinimization, Double> dfDzDw = (point2D) -> 0.;
+        Function<PointMinimization, Double> dfDzDw = (point4D) -> {
+            Point4D point = (Point4D) point4D;
+            return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
+                    (i, j) -> GradDerivativeLocalizationNeuralSource.dFMzRd(n, i, j, teta0, fi0, R1, point.getWi()) +
+                            GradLocalizationNeuralSource.dFMzRd(expU, n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
+            );
+        };
 
 
         List<List<Function<PointMinimization, Double>>> matrixGeese = Arrays.asList(
@@ -131,6 +217,7 @@ public class NewtonInverseResolveProcessor extends AbstractResolveInverseTask {
         );
 
 
-        return null;
+        return new Newton(funk, norma, Arrays.asList(gradX, gradY, gradZ, gradW),
+                matrixGeese, eps);
     }
 }

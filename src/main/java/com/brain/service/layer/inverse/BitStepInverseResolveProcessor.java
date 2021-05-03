@@ -61,12 +61,8 @@ public class BitStepInverseResolveProcessor extends AbstractResolveInverseTask {
                 Math.pow(gradX.apply(point4D), 2.) + Math.pow(gradY.apply(point4D), 2.) +
                         Math.pow(gradZ.apply(point4D), 2.) + Math.pow(gradW.apply(point4D), 2.)
         );
-        BitStep bitStepMinimization = new BitStep(funk, norma, Arrays.asList(gradX, gradY, gradZ, gradW),
+
+        return new BitStep(funk, norma, Arrays.asList(gradX, gradY, gradZ, gradW),
                 new GoldenRatioMinimizer(), eps);
-
-        // Start point
-        Point4D point4D = new Point4D(1. , 2. , 1., 1.);
-
-        return bitStepMinimization;
     }
 }
