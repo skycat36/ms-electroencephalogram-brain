@@ -73,11 +73,13 @@ public class CoefficientUtils {
 
     public static double coefficientTL(int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double R1, double rD) {
 
-        Function<Integer, Double> subFunction = (L) -> (-L - 1) / Math.pow(R1, L + 2);
+        Function<Integer, Double> subFunction = (L) -> (-L - 1) / R1;
 
-        return  (mX * CoefficientUtils.coefficientSum(n, rD, (L) -> subFunction.apply(L) * CoefficientUtils.coefficientAL(teta, fi, teta0, fi0, L)) +
-                mY * CoefficientUtils.coefficientSum(n, rD, (L) -> subFunction.apply(L) * CoefficientUtils.coefficientCL(teta, fi, teta0, fi0, L)) +
-                mZ * CoefficientUtils.coefficientSum(n, rD, (L) -> subFunction.apply(L) * L * CoefficientUtils.coefficientBL(teta, fi, teta0, fi0, L)));
+        double result = (mX * CoefficientUtils.coefficientSum(n, rD, (L) -> subFunction.apply(L) * CoefficientUtils.coefficientAL(teta, fi, teta0, fi0, L)) +
+                         mY * CoefficientUtils.coefficientSum(n, rD, (L) -> subFunction.apply(L) * CoefficientUtils.coefficientCL(teta, fi, teta0, fi0, L)) +
+                         mZ * CoefficientUtils.coefficientSum(n, rD, (L) -> subFunction.apply(L) * L * CoefficientUtils.coefficientBL(teta, fi, teta0, fi0, L)));
+
+        return  Math.pow(result, 2.);
     }
 
     public static double coefficientSum(int n, double rD, Function<Integer, Double> coefficientFunc) throws RuntimeException {

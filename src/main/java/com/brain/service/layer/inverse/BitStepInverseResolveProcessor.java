@@ -53,7 +53,7 @@ public class BitStepInverseResolveProcessor extends AbstractResolveInverseTask {
             Point4D point = (Point4D) point4D;
             return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
                     (i, j) -> GradDerivativeLocalizationNeuralSource.dFrd(n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), R1, point.getWi()) +
-                            GradLocalizationNeuralSource.dFrd(expU, n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
+                            GradLocalizationNeuralSource.dFRd(expU, n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
             );
         };
 
