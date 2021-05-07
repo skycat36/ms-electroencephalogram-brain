@@ -35,7 +35,9 @@ public class Newton implements MultipleMinimization {
         while (nor > eps) {
 
             List<Double> mulGesse = Objects.requireNonNull(MatrixConverter.convertMatrixToVector(
-                            MatrixConverter.convert(MatrixHelper.multiply(arrGrad, MatrixHelper.inverse(FunctionHelper.calcFunkMatrix(matrixGeese, point))).getData()))
+                    MatrixConverter.convert(MatrixHelper.multiply(arrGrad,
+                            MatrixHelper.inverse(FunctionHelper.calcFunkMatrix(matrixGeese, point))).getData()
+                    ))
             );
 
             newPoint = point.sum(CoefficientUtils.listMul(mulGesse, -1.));

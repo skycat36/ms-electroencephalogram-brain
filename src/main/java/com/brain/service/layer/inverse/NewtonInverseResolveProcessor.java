@@ -63,7 +63,7 @@ public class NewtonInverseResolveProcessor extends AbstractResolveInverseTask {
             Point4D point = (Point4D) point4D;
             return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
                     (i, j) -> GradDerivativeLocalizationNeuralSource.d2FMx(n, i, j, teta0, fi0, R1, point.getWi()) +
-                            GradLocalizationNeuralSource.d2FMx(n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
+                            GradLocalizationNeuralSource.d2FMx(n, i, j, teta0, fi0, point.getWi())
             );
         };
 
@@ -72,7 +72,7 @@ public class NewtonInverseResolveProcessor extends AbstractResolveInverseTask {
             Point4D point = (Point4D) point4D;
             return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
                     (i, j) -> GradDerivativeLocalizationNeuralSource.d2FMy(n, i, j, teta0, fi0, R1, point.getWi()) +
-                            GradLocalizationNeuralSource.d2FMy(n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
+                            GradLocalizationNeuralSource.d2FMy(n, i, j, teta0, fi0, point.getWi())
             );
         };
 
@@ -81,7 +81,7 @@ public class NewtonInverseResolveProcessor extends AbstractResolveInverseTask {
             Point4D point = (Point4D) point4D;
             return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
                     (i, j) -> GradDerivativeLocalizationNeuralSource.d2FMz(n, i, j, teta0, fi0, R1, point.getWi()) +
-                            GradLocalizationNeuralSource.d2FMz(n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
+                            GradLocalizationNeuralSource.d2FMz(n, i, j, teta0, fi0, point.getWi())
             );
         };
 
@@ -89,7 +89,7 @@ public class NewtonInverseResolveProcessor extends AbstractResolveInverseTask {
         Function<PointMinimization, Double> dfD2w = (point4D) -> {
             Point4D point = (Point4D) point4D;
             return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
-                    (i, j) -> GradDerivativeLocalizationNeuralSource.d2FRd(expU, n, i, j, teta0, fi0, R1,  point.getFi(), point.getRou(), point.getWi(), point.getWi()) +
+                    (i, j) -> GradDerivativeLocalizationNeuralSource.d2FRd(n, i, j, teta0, fi0, R1,  point.getFi(), point.getRou(), point.getWi(), point.getWi()) +
                             GradLocalizationNeuralSource.d2FRd(expU, n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
             );
         };
@@ -100,7 +100,7 @@ public class NewtonInverseResolveProcessor extends AbstractResolveInverseTask {
             Point4D point = (Point4D) point4D;
             return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
                     (i, j) -> GradDerivativeLocalizationNeuralSource.dFMxMy(n, i, j, teta0, fi0, R1, point.getWi()) +
-                            GradLocalizationNeuralSource.dFMxMy(n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
+                            GradLocalizationNeuralSource.dFMxMy(n, i, j, teta0, fi0, point.getWi())
             );
         };
 
@@ -109,7 +109,7 @@ public class NewtonInverseResolveProcessor extends AbstractResolveInverseTask {
             Point4D point = (Point4D) point4D;
             return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
                     (i, j) -> GradDerivativeLocalizationNeuralSource.dFMyMx(n, i, j, teta0, fi0, R1, point.getWi()) +
-                            GradLocalizationNeuralSource.dFMyMx(n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
+                            GradLocalizationNeuralSource.dFMyMx(n, i, j, teta0, fi0, point.getWi())
             );
         };
 
@@ -118,7 +118,7 @@ public class NewtonInverseResolveProcessor extends AbstractResolveInverseTask {
             Point4D point = (Point4D) point4D;
             return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
                     (i, j) -> GradDerivativeLocalizationNeuralSource.dFMxMz(n, i, j, teta0, fi0, R1, point.getWi()) +
-                            GradLocalizationNeuralSource.dFMxMz(n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
+                            GradLocalizationNeuralSource.dFMxMz(n, i, j, teta0, fi0, point.getWi())
             );
         };
 
@@ -127,7 +127,7 @@ public class NewtonInverseResolveProcessor extends AbstractResolveInverseTask {
             Point4D point = (Point4D) point4D;
             return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
                     (i, j) -> GradDerivativeLocalizationNeuralSource.dFMzMx(n, i, j, teta0, fi0, R1, point.getWi()) +
-                            GradLocalizationNeuralSource.dFMzMx(n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
+                            GradLocalizationNeuralSource.dFMzMx(n, i, j, teta0, fi0, point.getWi())
             );
         };
 
@@ -136,7 +136,7 @@ public class NewtonInverseResolveProcessor extends AbstractResolveInverseTask {
             Point4D point = (Point4D) point4D;
             return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
                     (i, j) -> GradDerivativeLocalizationNeuralSource.dFMyMz(n, i, j, teta0, fi0, R1, point.getWi()) +
-                            GradLocalizationNeuralSource.dFMyMz(n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
+                            GradLocalizationNeuralSource.dFMyMz(n, i, j, teta0, fi0, point.getWi())
             );
         };
 
@@ -145,7 +145,7 @@ public class NewtonInverseResolveProcessor extends AbstractResolveInverseTask {
             Point4D point = (Point4D) point4D;
             return FunctionHelper.iterateByArrayFunction(0, area, 2 * area, step,
                     (i, j) -> GradDerivativeLocalizationNeuralSource.dFMzMy(n, i, j, teta0, fi0, R1, point.getWi()) +
-                            GradLocalizationNeuralSource.dFMzMy(n, i, j, teta0, fi0, point.getTeta(), point.getFi(), point.getRou(), point.getWi())
+                            GradLocalizationNeuralSource.dFMzMy(n, i, j, teta0, fi0, point.getWi())
             );
         };
 

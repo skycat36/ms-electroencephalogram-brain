@@ -16,9 +16,11 @@ public class CoefficientUtils {
     public static List<List<Double>> calculateMatrixB(int L, int i) throws RuntimeException {
 
         RealMatrix result = MatrixUtils.createRealMatrix(Objects.requireNonNull(MatrixConverter.convert(calculateMatrixD(L, i))));
-        while (i > 1){
+        while (i > 1) {
             i--;
-            result = result.multiply(MatrixUtils.createRealMatrix(Objects.requireNonNull(MatrixConverter.convert(calculateMatrixD(L, i)))));
+            result = result.multiply(MatrixUtils.createRealMatrix(
+                    Objects.requireNonNull(MatrixConverter.convert(calculateMatrixD(L, i)))
+            ));
         }
         return MatrixConverter.convert(result.getData());
     }
@@ -27,10 +29,13 @@ public class CoefficientUtils {
     // i - начинается с 1
     public static List<List<Double>> calculateMatrixD(int L, int i) throws RuntimeException {
         List<List<Double>> result = new ArrayList<>();
-        if (i > ConstantUtils.SIGMA_I.size() - 1 || i > ConstantUtils.R_I.size() - 1) throw new RuntimeException("Matrix not be calculeted");
-        if (i == 1){
+        if (i > ConstantUtils.SIGMA_I.size() - 1 || i > ConstantUtils.R_I.size() - 1)
+            throw new RuntimeException("Matrix not be calculeted");
+        if (i == 1) {
             result.add(Collections.singletonList(1.));
-            result.add(Collections.singletonList((L + 1) / (L * Math.pow(ConstantUtils.R_I.get(i), 2 * L + 1))));
+            result.add(Collections.singletonList(
+                    (L + 1) / (L * Math.pow(ConstantUtils.R_I.get(i), 2 * L + 1))
+            ));
             return result;
         }
 
@@ -45,7 +50,7 @@ public class CoefficientUtils {
         return result;
     }
 
-    private static double temporaryCoefficient(int L){
+    private static double temporaryCoefficient(int L) {
         return (2 * L + 1) / ((4 * Math.PI * ConstantUtils.SIGMA_3) * Math.pow(ConstantUtils.R_1, L + 1) *
                 CoefficientUtils.calculateMatrixB(L, 1).get(0).get(0));
     }
@@ -65,8 +70,8 @@ public class CoefficientUtils {
     public static double coefficientEL(double expU, int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double rD) {
 
         double result = (-mX * coefficientSum(n, rD, (L) -> coefficientAL(teta, fi, teta0, fi0, L)) -
-                        mY * coefficientSum(n, rD, (L) -> coefficientCL(teta, fi, teta0, fi0, L)) -
-                        mZ * coefficientSum(n, rD, (L) -> coefficientBL(teta, fi, teta0, fi0, L)));
+                mY * coefficientSum(n, rD, (L) -> coefficientCL(teta, fi, teta0, fi0, L)) -
+                mZ * coefficientSum(n, rD, (L) -> L * coefficientBL(teta, fi, teta0, fi0, L)));
 
         return 2 * (expU + result);
     }
@@ -74,12 +79,11 @@ public class CoefficientUtils {
     public static double coefficientTL(int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double R1, double rD) {
 
         Function<Integer, Double> subFunction = (L) -> (-L - 1) / R1;
-
-        double result = (mX * CoefficientUtils.coefficientSum(n, rD, (L) -> subFunction.apply(L) * CoefficientUtils.coefficientAL(teta, fi, teta0, fi0, L)) +
-                         mY * CoefficientUtils.coefficientSum(n, rD, (L) -> subFunction.apply(L) * CoefficientUtils.coefficientCL(teta, fi, teta0, fi0, L)) +
-                         mZ * CoefficientUtils.coefficientSum(n, rD, (L) -> subFunction.apply(L) * L * CoefficientUtils.coefficientBL(teta, fi, teta0, fi0, L)));
-
-        return  Math.pow(result, 2.);
+        double result =
+                mX * CoefficientUtils.coefficientSum(n, rD, (L) -> subFunction.apply(L) *     CoefficientUtils.coefficientAL(teta, fi, teta0, fi0, L)) +
+                mY * CoefficientUtils.coefficientSum(n, rD, (L) -> subFunction.apply(L) *     CoefficientUtils.coefficientCL(teta, fi, teta0, fi0, L)) +
+                mZ * CoefficientUtils.coefficientSum(n, rD, (L) -> subFunction.apply(L) * L * CoefficientUtils.coefficientBL(teta, fi, teta0, fi0, L));
+        return Math.pow(result, 2.);
     }
 
     public static double coefficientSum(int n, double rD, Function<Integer, Double> coefficientFunc) throws RuntimeException {
@@ -88,7 +92,7 @@ public class CoefficientUtils {
 
     public static double coefficientSum(int i, int n, double rD, Function<Integer, Double> coefficientFunc) throws RuntimeException {
         double result = .0;
-        for (; i < n; i++){
+        for (; i < n; i++) {
             result += Math.pow(rD, i - 1) * coefficientFunc.apply(i);
         }
         return result;
@@ -97,7 +101,7 @@ public class CoefficientUtils {
     public static List<Double> listSum(List<? extends Number> list1, List<? extends Number> list2) throws RuntimeException {
         if (list1.size() != list2.size()) throw new RuntimeException("Arrays must be equals size!");
         List<Double> result = new ArrayList<>();
-        for (int i = 0; i < list1.size(); i++){
+        for (int i = 0; i < list1.size(); i++) {
             result.add(list1.get(i).doubleValue() + list2.get(i).doubleValue());
         }
         return result;

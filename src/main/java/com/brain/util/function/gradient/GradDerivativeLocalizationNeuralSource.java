@@ -93,7 +93,7 @@ public class GradDerivativeLocalizationNeuralSource {
     }
 
     private static double dTLdRd(int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double R1, double rD) {
-        Function<Integer, Double> subFunction = (L) -> ((L * L)- 1) / R1;
+        Function<Integer, Double> subFunction = (L) -> ((L * L) - 1) / R1;
 
         double result =
                 (mX * CoefficientUtils.coefficientSum(2, n, rD, (L) -> (1. / rD) * subFunction.apply(L) *     CoefficientUtils.coefficientAL(teta, fi, teta0, fi0, L)) +
@@ -102,7 +102,7 @@ public class GradDerivativeLocalizationNeuralSource {
         return -result;
     }
 
-    public static double d2FRd(double expU, int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double R1, double rD) {
+    public static double d2FRd(int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double R1, double rD) {
         Function<Integer, Double> subFunction = (L) -> (((L * L) - 1) * (L - 2)) / R1;
 
         double dTLd2Rd = -(mX * CoefficientUtils.coefficientSum(3, n, rD, (L) -> (1. / (rD * rD)) * subFunction.apply(L) *     CoefficientUtils.coefficientAL(teta, fi, teta0, fi0, L)) +
