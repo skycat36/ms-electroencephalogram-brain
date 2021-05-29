@@ -24,7 +24,7 @@ public class BitStep implements MultipleMinimization {
 
     @Override
     public ResultPoint minimization(PointMinimization point) {
-        double alfa = 0;
+        double alfa = 2;
         double nor = norma.apply(point);
         double f = func.apply(point);
 

@@ -1,6 +1,7 @@
 package com.brain.util.function;
 
 import com.brain.util.minimization.point.PointMinimization;
+import com.brain.util.minimization.point.Triple;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +23,29 @@ public class FunctionHelper {
         return result;
     }
 
-    public static double iterateByArrayFunction(double start, double area1, double area2, double step, BiFunction<Double, Double, Double> func) {
+
+    public static double iterateByArrayFunction(List<List<Double>> expU, double start, double area1, double area2, double step, BiFunction<Double, Double, Double> func) {
         double result = 0;
+        int k = 0;
         for (double i = start; i < area1; i += step) {
+            List<Double> temp = expU.get(k);
+            k++;
+            int m=0;
             for (double j = start; j < area2; j += step) {
-                result += func.apply(i, j);
+                result += temp.get(m) - func.apply(i, j);
+                m++;
             }
         }
         return result;
     }
 }
+//
+//    public static double iterateByArrayFunction(List<Triple<Double, Double, Double>> triples, Function<Triple<Double, Double, Double>, Double> func) {
+//        double result = 0;
+//        for (Triple triple: triples){
+//                result += func.apply(i, j);
+//            }
+//        }
+//        return result;
+//    }
+//}

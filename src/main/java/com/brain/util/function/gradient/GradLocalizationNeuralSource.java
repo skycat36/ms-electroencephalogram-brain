@@ -1,13 +1,20 @@
 package com.brain.util.function.gradient;
 
 import com.brain.util.function.CoefficientUtils;
+import com.brain.util.minimization.point.Triple;
+
+import java.util.List;
 
 public class GradLocalizationNeuralSource {
 
-    public static double dFMx(double expU, int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double rD) {
-        double subFunction = - CoefficientUtils.coefficientSum(n, rD, (L) -> CoefficientUtils.coefficientAL(teta, fi, teta0, fi0, L));
-
-        return CoefficientUtils.coefficientEL(expU, n, teta, fi, teta0, fi0, mX, mY, mZ, rD) * subFunction;
+    public static double dFMx(List<Triple<Double, Double, Double>> expU, int n, double teta0, double fi0, double mX, double mY, double mZ, double rD) {
+        double result = 0;
+        for (Triple<Double, Double, Double> triple: expU) {
+            result += CoefficientUtils.coefficientSum(n, rD, (L) ->
+                    CoefficientUtils.coefficientAL(triple.getKey(), triple.getValue(), teta0, fi0, L)) *
+                    CoefficientUtils.coefficientEL(triple.getResult(), n, triple.getKey(), triple.getValue(), teta0, fi0, mX, mY, mZ, rD);
+        }
+        return - result;
     }
 
     public static double d2FMx(int n, double teta, double fi, double teta0, double fi0, double rD) {
@@ -36,10 +43,14 @@ public class GradLocalizationNeuralSource {
         return dFRdMx(expU, n, teta, fi, teta0, fi0, mX, mY, mZ, rD);
     }
 
-    public static double dFMy(double expU, int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double rD) {
-        double subFunction = - CoefficientUtils.coefficientSum(n, rD, (L) -> CoefficientUtils.coefficientCL(teta, fi, teta0, fi0, L));
-
-        return CoefficientUtils.coefficientEL(expU, n, teta, fi, teta0, fi0, mX, mY, mZ, rD) * subFunction;
+    public static double dFMy(List<Triple<Double, Double, Double>> expU, int n, double teta0, double fi0, double mX, double mY, double mZ, double rD) {
+        double result = 0;
+        for (Triple<Double, Double, Double> triple: expU) {
+            result += CoefficientUtils.coefficientSum(n, rD, (L) ->
+                    CoefficientUtils.coefficientCL(triple.getKey(), triple.getValue(), teta0, fi0, L)) *
+                    CoefficientUtils.coefficientEL(triple.getResult(), n, triple.getKey(), triple.getValue(), teta0, fi0, mX, mY, mZ, rD);
+        }
+        return - result;
     }
 
     public static double d2FMy(int n, double teta, double fi, double teta0, double fi0, double rD) {
@@ -64,10 +75,14 @@ public class GradLocalizationNeuralSource {
         return dFRdMy(expU, n, teta, fi, teta0, fi0, mX, mY, mZ, rD);
     }
 
-    public static double dFMz(double expU, int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double rD) {
-        double subFunction = - CoefficientUtils.coefficientSum(n, rD, (L) -> L * CoefficientUtils.coefficientBL(teta, fi, teta0, fi0, L));
-
-        return CoefficientUtils.coefficientEL(expU, n, teta, fi, teta0, fi0, mX, mY, mZ, rD) * subFunction;
+    public static double dFMz(List<Triple<Double, Double, Double>> expU, int n, double teta0, double fi0, double mX, double mY, double mZ, double rD) {
+        double result = 0;
+        for (Triple<Double, Double, Double> triple: expU) {
+            result += CoefficientUtils.coefficientSum(n, rD, (L) ->
+                    L * CoefficientUtils.coefficientBL(triple.getKey(), triple.getValue(), teta0, fi0, L)) *
+                    CoefficientUtils.coefficientEL(triple.getResult(), n, triple.getKey(), triple.getValue(), teta0, fi0, mX, mY, mZ, rD);
+        }
+        return - result;
     }
 
     public static double d2FMz(int n, double teta, double fi, double teta0, double fi0, double rD) {
@@ -88,13 +103,19 @@ public class GradLocalizationNeuralSource {
         return dFRdMz(expU, n, teta, fi, teta0, fi0, mX, mY, mZ, rD);
     }
 
-    public static double dFRd(double expU, int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double rD) {
-        double result =
-                ( - mX * CoefficientUtils.coefficientSum(2, n, rD, (L) -> (1. / rD) * (L - 1) *     CoefficientUtils.coefficientAL(teta, fi, teta0, fi0, L)) -
-                    mY * CoefficientUtils.coefficientSum(2, n, rD, (L) -> (1. / rD) * (L - 1) *     CoefficientUtils.coefficientCL(teta, fi, teta0, fi0, L)) -
-                    mZ * CoefficientUtils.coefficientSum(2, n, rD, (L) -> (1. / rD) * (L - 1) * L * CoefficientUtils.coefficientBL(teta, fi, teta0, fi0, L)));
+    public static double dFRd(List<Triple<Double, Double, Double>> expU, int n, double teta0, double fi0, double mX, double mY, double mZ, double rD) {
+        double result = 0;
+        for (Triple<Double, Double, Double> triple: expU) {
+            double temp =
+                    ( - mX * CoefficientUtils.coefficientSum(2, n, rD, (L) -> (1. / rD) * (L - 1) *     CoefficientUtils.coefficientAL(triple.getKey(), triple.getValue(), teta0, fi0, L)) -
+                            mY * CoefficientUtils.coefficientSum(2, n, rD, (L) -> (1. / rD) * (L - 1) *     CoefficientUtils.coefficientCL(triple.getKey(), triple.getValue(), teta0, fi0, L)) -
+                            mZ * CoefficientUtils.coefficientSum(2, n, rD, (L) -> (1. / rD) * (L - 1) * L * CoefficientUtils.coefficientBL(triple.getKey(), triple.getValue(), teta0, fi0, L)));
 
-        return CoefficientUtils.coefficientEL(expU, n, teta, fi, teta0, fi0, mX, mY, mZ, rD) * result;
+            result += temp *
+                    CoefficientUtils.coefficientEL(triple.getResult(), n, triple.getKey(), triple.getValue(), teta0, fi0, mX, mY, mZ, rD);
+        }
+
+        return result;
     }
 
     private static double dERd(int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double rD){

@@ -27,7 +27,7 @@ public class ResultPoint {
     private ResultPoint(Point3D point3D, int iterations, double result){
         this.teta = point3D.getTeta();
         this.fi =   point3D.getFi();
-        this.wi =   point3D.getRou();
+        this.rou =   point3D.getRou();
         this.iterations = iterations;
         this.potential = result;
     }

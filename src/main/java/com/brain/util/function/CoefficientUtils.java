@@ -3,6 +3,7 @@ package com.brain.util.function;
 import com.brain.converter.MatrixConverter;
 import com.brain.util.ConstantUtils;
 import com.brain.util.function.legangr.NormMultiplier;
+import com.brain.util.minimization.point.Triple;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 
@@ -68,10 +69,9 @@ public class CoefficientUtils {
     }
 
     public static double coefficientEL(double expU, int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double rD) {
-
-        double result = (-mX * coefficientSum(n, rD, (L) -> coefficientAL(teta, fi, teta0, fi0, L)) -
-                mY * coefficientSum(n, rD, (L) -> coefficientCL(teta, fi, teta0, fi0, L)) -
-                mZ * coefficientSum(n, rD, (L) -> L * coefficientBL(teta, fi, teta0, fi0, L)));
+        double result =   (-mX * coefficientSum(n, rD, (L) ->     coefficientAL(teta, fi, teta0, fi0, L)) -
+                            mY * coefficientSum(n, rD, (L) ->     coefficientCL(teta, fi, teta0, fi0, L)) -
+                            mZ * coefficientSum(n, rD, (L) -> L * coefficientBL(teta, fi, teta0, fi0, L)));
 
         return 2 * (expU + result);
     }
