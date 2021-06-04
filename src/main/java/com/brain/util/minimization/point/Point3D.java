@@ -12,25 +12,25 @@ import java.util.List;
 @NoArgsConstructor
 public class Point3D implements PointMinimization {
 
-    private double teta;
+    private double pointX;
 
-    private double fi;
+    private double pointY;
 
-    private double rou;
+    private double pointZ;
 
     @Override
     public List<? extends Number> getParamList() {
-        return Arrays.asList(this.teta, this.fi, this.rou);
+        return Arrays.asList(this.pointX, this.pointY, this.pointZ);
     }
 
     @Override
     public PointMinimization sum(List<? extends Number> arguments) {
-        if (getParamList().size() != arguments.size()) throw new RuntimeException("Count field must be equals count arguments!");
+        if (getParamList().size() != arguments.size()) throw new RuntimeException("Count pointYeld must be equals count arguments!");
 
         return new Point3D(
-                this.teta + arguments.get(0).doubleValue(),
-                this.fi + arguments.get(1).doubleValue(),
-                this.rou + arguments.get(2).doubleValue()
+                this.pointX + arguments.get(0).doubleValue(),
+                this.pointY + arguments.get(1).doubleValue(),
+                this.pointZ + arguments.get(2).doubleValue()
         );
     }
 }

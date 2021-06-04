@@ -3,11 +3,10 @@ package com.brain;
 import com.brain.service.layer.SolvingDirectTask;
 import com.brain.service.layer.SolvingInverseTask;
 import com.brain.service.layer.inverse.BitStepInverseResolveProcessor;
-import com.brain.util.minimization.point.Point3D;
+import com.brain.service.layer.inverse.NewtonInverseResolveProcessor;
 import com.brain.util.minimization.point.Point4D;
 import com.brain.util.minimization.point.ResultPoint;
-import com.brain.util.minimization.point.Triple;
-import javafx.util.Pair;
+import com.brain.util.minimization.point.ExpPoint;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -16,7 +15,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Main {
 
@@ -28,25 +26,26 @@ public class Main {
         double R1 = 9.5;
         double step = Math.PI / 3;
 
-        List<Triple<Double, Double, Double>> arrTetaFI = new ArrayList<>();
+        List<ExpPoint<Double>> arrTetaFI = new ArrayList<>();
         for (double i = 0; i < Math.PI; i+=step){
             for (double j = 0; j < 2 * Math.PI; j+=step){
 
                 double directResult = SolvingDirectTask.calculate(n, i, j, 1, 1, 10,10, 30, 1);
                 writeData.append(String.format("DirectTask  -- Teta[i]: %s, Fi[j]: %s |  rez: %s \n", i, j, directResult));
-                arrTetaFI.add(new Triple<>(i, j,directResult));
+                arrTetaFI.add(new ExpPoint<>(i, j,directResult));
             }
         }
 
         Point4D point4D = new Point4D(10, 15, 35, 1);
 
-        ResultPoint inverseResult = new SolvingInverseTask(new BitStepInverseResolveProcessor())
-                .calculate(arrTetaFI, n,1, 1, R1, 0.000001, point4D);
+        ResultPoint inverseResult = new SolvingInverseTask(new NewtonInverseResolveProcessor())
+                .calculate(arrTetaFI, n,1, 1, R1, 0.00001, point4D);
         
         writeData.append(String.format("InverseTask -- rez --  mX: %s  | mY: %s | mZ: %s | rD: %s | potential: %s | iterations: %s\n\n",
-                inverseResult.getTeta(), inverseResult.getFi(), inverseResult.getRou(), inverseResult.getWi(), inverseResult.getPotential(), inverseResult.getIterations()));
+                inverseResult.getPointX(), inverseResult.getPointY(), inverseResult.getPointZ(), inverseResult.getPointW(),
+                inverseResult.getPotential(), inverseResult.getIterations()));
 
-        writeUsingFiles("C:\\vegas\\ms-electroencephalogram-brain\\src\\main\\resources", "FileWriter.txt", writeData.toString());
+        writeUsingFiles("E:\\magister\\ms-electroencephalogram-brain\\src\\main\\resources", "FileWriter.txt", writeData.toString());
     }
 
     private static String readUsingFiles(String fileName) throws IOException {

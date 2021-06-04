@@ -1,7 +1,6 @@
 package com.brain.util.function;
 
 import com.brain.util.minimization.point.PointMinimization;
-import com.brain.util.minimization.point.Triple;
 
 import java.util.ArrayList;
 import java.util.List;

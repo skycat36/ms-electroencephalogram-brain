@@ -5,38 +5,38 @@ import lombok.Getter;
 @Getter
 public class ResultPoint {
 
-    private double teta;
+    private double pointX;
 
-    private double fi;
+    private double pointY;
 
-    private double rou;
+    private double pointZ;
 
-    private double wi;
+    private double pointW;
 
     private double potential;
 
     private int iterations;
 
     private ResultPoint(Point2D point2D, int iterations, double result){
-        this.teta = point2D.getTeta();
-        this.fi = point2D.getFi();
+        this.pointX = point2D.getPointX();
+        this.pointY = point2D.getPointY();
         this.iterations = iterations;
         this.potential = result;
     }
 
     private ResultPoint(Point3D point3D, int iterations, double result){
-        this.teta = point3D.getTeta();
-        this.fi =   point3D.getFi();
-        this.rou =   point3D.getRou();
+        this.pointX = point3D.getPointX();
+        this.pointY =   point3D.getPointY();
+        this.pointZ =   point3D.getPointZ();
         this.iterations = iterations;
         this.potential = result;
     }
 
     private ResultPoint(Point4D point4D, int iterations, double result){
-        this.teta = point4D.getTeta();
-        this.fi =   point4D.getFi();
-        this.rou =  point4D.getRou();
-        this.wi =   point4D.getWi();
+        this.pointX = point4D.getPointX();
+        this.pointY =   point4D.getPointY();
+        this.pointZ =  point4D.getPointZ();
+        this.pointW =   point4D.getPointW();
         this.iterations = iterations;
         this.potential = result;
     }
