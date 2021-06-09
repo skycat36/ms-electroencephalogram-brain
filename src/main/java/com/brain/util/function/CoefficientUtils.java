@@ -34,24 +34,25 @@ public class CoefficientUtils {
         if (i == 1) {
             result.add(Collections.singletonList(1.));
             result.add(Collections.singletonList(
-                    (L + 1) / (L * Math.pow(ConstantUtils.R_I.get(i), 2 * L + 1))
+                    (L + 1.) / (L * Math.pow(ConstantUtils.R_I.get(i), 2. * L + 1.))
             ));
             return result;
         }
 
         result.add(Arrays.asList(
-                L / (2 * L + 1) * (1 + ((L + 1) / L) * (ConstantUtils.SIGMA_I.get(i - 1) / ConstantUtils.SIGMA_I.get(i))),
-                L / (2 * L + 1) * (1 - (ConstantUtils.SIGMA_I.get(i - 1) / ConstantUtils.SIGMA_I.get(i))) * Math.pow(ConstantUtils.R_I.get(i), 2 * L + 1)));
+                L / (2. * L + 1.) * (1. + ((L + 1.) / L) * (ConstantUtils.SIGMA_I.get(i - 1) / ConstantUtils.SIGMA_I.get(i))),
+                L / (2. * L + 1.) * (1. - (ConstantUtils.SIGMA_I.get(i - 1) / ConstantUtils.SIGMA_I.get(i))) * Math.pow(ConstantUtils.R_I.get(i), 2. * L + 1.)));
 
         result.add(Arrays.asList(
-                (L + 1) / (2 * L + 1) * (1 - (ConstantUtils.SIGMA_I.get(i - 1) / ConstantUtils.SIGMA_I.get(i))) / Math.pow(ConstantUtils.R_I.get(i), 2 * L + 1),
-                (L + 1) / (2 * L + 1) * (1 + (L / (L + 1)) * (ConstantUtils.SIGMA_I.get(i - 1) / ConstantUtils.SIGMA_I.get(i)))
+                (L + 1.) / (2. * L + 1.) * (1. - (ConstantUtils.SIGMA_I.get(i - 1) / ConstantUtils.SIGMA_I.get(i))) / Math.pow(ConstantUtils.R_I.get(i), 2 * L + 1.),
+                (L + 1.) / (2. * L + 1.) * (1. + (L / (L + 1.)) * (ConstantUtils.SIGMA_I.get(i - 1) / ConstantUtils.SIGMA_I.get(i)))
         ));
         return result;
     }
 
     private static double temporaryCoefficient(int L) {
-        return (2 * L + 1) / ((4 * Math.PI * ConstantUtils.SIGMA_3) * Math.pow(ConstantUtils.R_1, L + 1) *
+        //i - выбирает количество слоев модели (8-восьмислойная)
+        return (2. * L + 1.) / ((4. * Math.PI * ConstantUtils.SIGMA_3) * Math.pow(ConstantUtils.R_1, L + 1.) *
                 CoefficientUtils.calculateMatrixB(L, 1).get(0).get(0));
     }
 
@@ -72,12 +73,12 @@ public class CoefficientUtils {
                             mY * coefficientSum(n, rD, (L) ->     coefficientCL(teta, fi, teta0, fi0, L)) -
                             mZ * coefficientSum(n, rD, (L) -> L * coefficientBL(teta, fi, teta0, fi0, L));
 
-        return 2 * (expU + result);
+        return 2. * (expU + result);
     }
 
     public static double coefficientTL(int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double R1, double rD) {
 
-        Function<Integer, Double> subFunction = (L) -> (-L - 1) / R1;
+        Function<Integer, Double> subFunction = (L) -> (-L - 1.) / R1;
         double result =
                 mX * CoefficientUtils.coefficientSum(n, rD, (L) -> subFunction.apply(L) *     CoefficientUtils.coefficientAL(teta, fi, teta0, fi0, L)) +
                 mY * CoefficientUtils.coefficientSum(n, rD, (L) -> subFunction.apply(L) *     CoefficientUtils.coefficientCL(teta, fi, teta0, fi0, L)) +
