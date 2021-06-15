@@ -22,7 +22,6 @@ public class FunctionHelper {
         return result;
     }
 
-
     public static double iterateByArrayFunction(List<List<Double>> expU, double start, double area1, double area2, double step, BiFunction<Double, Double, Double> func) {
         double result = 0;
         int k = 0;
@@ -38,13 +37,3 @@ public class FunctionHelper {
         return result;
     }
 }
-//
-//    public static double iterateByArrayFunction(List<Triple<Double, Double, Double>> triples, Function<Triple<Double, Double, Double>, Double> func) {
-//        double result = 0;
-//        for (Triple triple: triples){
-//                result += func.apply(i, j);
-//            }
-//        }
-//        return result;
-//    }
-//}

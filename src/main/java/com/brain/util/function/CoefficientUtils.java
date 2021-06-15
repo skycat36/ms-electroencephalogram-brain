@@ -76,16 +76,6 @@ public class CoefficientUtils {
         return 2. * (expU + result);
     }
 
-    public static double coefficientTL(int n, double teta, double fi, double teta0, double fi0, double mX, double mY, double mZ, double R1, double rD) {
-
-        Function<Integer, Double> subFunction = (L) -> (-L - 1.) / R1;
-        double result =
-                mX * CoefficientUtils.coefficientSum(n, rD, (L) -> subFunction.apply(L) *     CoefficientUtils.coefficientAL(teta, fi, teta0, fi0, L)) +
-                mY * CoefficientUtils.coefficientSum(n, rD, (L) -> subFunction.apply(L) *     CoefficientUtils.coefficientCL(teta, fi, teta0, fi0, L)) +
-                mZ * CoefficientUtils.coefficientSum(n, rD, (L) -> subFunction.apply(L) * L * CoefficientUtils.coefficientBL(teta, fi, teta0, fi0, L));
-        return Math.pow(result, 2.);
-    }
-
     public static double coefficientSum(int n, double rD, Function<Integer, Double> coefficientFunc) throws RuntimeException {
         return coefficientSum(1, n, rD, coefficientFunc);
     }
@@ -94,15 +84,6 @@ public class CoefficientUtils {
         double result = .0;
         for (; i < n; i++) {
             result += Math.pow(rD, i - 1) * coefficientFunc.apply(i);
-        }
-        return result;
-    }
-
-    public static List<Double> listSum(List<? extends Number> list1, List<? extends Number> list2) throws RuntimeException {
-        if (list1.size() != list2.size()) throw new RuntimeException("Arrays must be equals size!");
-        List<Double> result = new ArrayList<>();
-        for (int i = 0; i < list1.size(); i++) {
-            result.add(list1.get(i).doubleValue() + list2.get(i).doubleValue());
         }
         return result;
     }

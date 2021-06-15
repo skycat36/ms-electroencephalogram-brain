@@ -28,7 +28,6 @@ public class Newton implements MultipleMinimization {
         double nor = norma.apply(point);
         List<Double> arrGrad = FunctionHelper.calcFunkList(gradArg, point);
 
-
         int iterations = 0;
         PointMinimization newPoint;
 
