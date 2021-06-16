@@ -1,12 +1,6 @@
 package com.brain.service.layer;
 
 import com.brain.util.function.CoefficientUtils;
-import com.brain.util.function.legangr.NormMultiplier;
-import com.brain.util.ConstantUtils;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class SolvingDirectTask {
 

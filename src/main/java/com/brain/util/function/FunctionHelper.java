@@ -14,10 +14,19 @@ public class FunctionHelper {
         return funkList.stream().map(func -> func.apply(point)).collect(Collectors.toList());
     }
 
-    public static List<List<Double>> calcFunkMatrix(List<List<Function<PointMinimization, Double>>> funkMatrix, PointMinimization point){
+    //Для подсчета верхней треугольной матрицы Гессэ для Ньютона
+    public static List<List<Double>> calcFunkMatrixTriangle(List<List<Function<PointMinimization, Double>>> funkMatrix, PointMinimization point){
         List<List<Double>> result = new ArrayList<>();
-        for (List<Function<PointMinimization, Double>> functionList: funkMatrix){
-            result.add(functionList.stream().map(f -> f.apply(point)).collect(Collectors.toList()));
+        for (int i = 0; i < funkMatrix.size(); i++) {
+            List<Double> temp = new ArrayList<>();
+            for (int j = 0; j < funkMatrix.size(); j++) {
+                if (i <= j) {
+                    temp.add(funkMatrix.get(i).get(j).apply(point));
+                } else {
+                    temp.add(result.get(j).get(i));
+                }
+            }
+            result.add(temp);
         }
         return result;
     }
